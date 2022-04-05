@@ -9,5 +9,3 @@ extern "C" {
 extern "C" {
 #include "wrap.h"
 }
-
-DLL_EXPORT void test(void);
