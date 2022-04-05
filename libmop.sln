@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.32228.343
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libmop", "libmop\libmop.vcxproj", "{5E22C06B-8A79-49C2-A66A-2AFB3552BB59}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test\test.vcxproj", "{40C66531-0B3B-4DBA-BF76-B75B0A5CF3E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{5E22C06B-8A79-49C2-A66A-2AFB3552BB59}.Release|x64.Build.0 = Release|x64
 		{5E22C06B-8A79-49C2-A66A-2AFB3552BB59}.Release|x86.ActiveCfg = Release|Win32
 		{5E22C06B-8A79-49C2-A66A-2AFB3552BB59}.Release|x86.Build.0 = Release|Win32
+		{40C66531-0B3B-4DBA-BF76-B75B0A5CF3E0}.Debug|x64.ActiveCfg = Debug|x64
+		{40C66531-0B3B-4DBA-BF76-B75B0A5CF3E0}.Debug|x64.Build.0 = Debug|x64
+		{40C66531-0B3B-4DBA-BF76-B75B0A5CF3E0}.Debug|x86.ActiveCfg = Debug|Win32
+		{40C66531-0B3B-4DBA-BF76-B75B0A5CF3E0}.Debug|x86.Build.0 = Debug|Win32
+		{40C66531-0B3B-4DBA-BF76-B75B0A5CF3E0}.Release|x64.ActiveCfg = Release|x64
+		{40C66531-0B3B-4DBA-BF76-B75B0A5CF3E0}.Release|x64.Build.0 = Release|x64
+		{40C66531-0B3B-4DBA-BF76-B75B0A5CF3E0}.Release|x86.ActiveCfg = Release|Win32
+		{40C66531-0B3B-4DBA-BF76-B75B0A5CF3E0}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

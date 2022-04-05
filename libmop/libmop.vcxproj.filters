@@ -13,17 +13,29 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header\deflate">
+      <UniqueIdentifier>{f5ad9e08-1b7a-4300-aa41-5042a0d732bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\libmop.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="include\deflate.h">
+    <ClInclude Include="include\wrap.h">
       <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="include\deflate\deflate.hpp">
+      <Filter>Header\deflate</Filter>
+    </ClInclude>
+    <ClInclude Include="include\deflate\define.h">
+      <Filter>Header\deflate</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\libmop.c">
+    <ClCompile Include="source\libmop.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\wrap.c">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
