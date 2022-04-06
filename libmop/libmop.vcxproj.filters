@@ -30,12 +30,18 @@
     <ClInclude Include="include\deflate\define.h">
       <Filter>Header\deflate</Filter>
     </ClInclude>
+    <ClInclude Include="include\matrix.hpp">
+      <Filter>Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\libmop.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="source\wrap.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\matrix.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

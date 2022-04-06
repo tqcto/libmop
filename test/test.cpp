@@ -5,10 +5,14 @@
 
 int main(void) {
 
-	int value = 20,
-		max = 19;
+	mop::matrix mat(1920, 1080, mop::color_type::RGBA);
 
-	printf("v:%d max:%d a:%d\n", value, max, mirror(value, max));
+	if (mat.empty()) {
+		printf("empty.\n");
+		return 1;
+	}
+
+	printf("w:%d h:%d c:%d\n", mat.width(), mat.height(), mat.channel());
 
 	return 0;
 

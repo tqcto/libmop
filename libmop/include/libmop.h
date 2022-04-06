@@ -9,3 +9,7 @@ extern "C" {
 extern "C" {
 #include "wrap.h"
 }
+
+extern "C++" {
+#include "matrix.hpp"
+}

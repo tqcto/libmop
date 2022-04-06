@@ -2,70 +2,108 @@
 
 #include "define.h"
 
-typedef unsigned char uchar;
-typedef unsigned short ushort;
+namespace mop {
 
-#pragma region vector define
+	typedef unsigned char uchar;
+	typedef unsigned short ushort;
 
-template <typename T>
-struct _mop_vector2 {
+	#pragma region vector define
 
-	T x;
-	T y;
+	template <typename T>
+	struct _vector2 {
 
-	_mop_vector2(T _x, T _y) {
-		x = _x;
-		y = _y;
-	}
+		T x;
+		T y;
 
-};
+		_vector2(void) {
+			x = 0;
+			y = 0;
+		}
+		_vector2(T _x, T _y) {
+			x = _x;
+			y = _y;
+		}
 
-template <typename T>
-struct _mop_vector3 {
+	};
 
-	T x;
-	T y;
-	T z;
+	template <typename T>
+	struct _vector3 {
 
-	_mop_vector3(T _x, T _y, T _z) {
-		x = _x;
-		y = _y;
-		z = _z;
-	}
+		T x;
+		T y;
+		T z;
 
-};
+		_vector3(void) {
+			x = 0;
+			y = 0;
+			z = 0;
+		}
+		_vector3(T _x, T _y, T _z) {
+			x = _x;
+			y = _y;
+			z = _z;
+		}
 
-typedef _mop_vector2<int> mop_vector2;
-typedef _mop_vector2<float> mop_vector2f;
-typedef _mop_vector2<double> mop_vector2d;
+	};
 
-typedef _mop_vector3<int> mop_vector3;
-typedef _mop_vector3<float> mop_vector3f;
-typedef _mop_vector3<double> mop_vector3d;
+	typedef _vector2<int> vector2;
+	typedef _vector2<float> vector2f;
+	typedef _vector2<double> vector2d;
+
+	typedef _vector3<int> vector3;
+	typedef _vector3<float> vector3f;
+	typedef _vector3<double> vector3d;
+
+#pragma endregion
+
+	#pragma region pixel define
+
+	enum {
+
+		RED = 0,
+		GREEN,
+		BLUE,
+		ALPHA
+
+	};
+
+	typedef enum {
+
+		GRAY = 0,
+		RGB,
+		RGBA,
+		BGR,
+		BGRA
+
+	}color_type;
+
+	template <typename T>
+	struct _pixel {
+
+		T red;
+		T green;
+		T blue;
+		T alpha;
+
+		_pixel(void) {
+			red = 0x00;
+			green = 0x00;
+			blue = 0x00;
+			alpha = 0x00;
+		}
+		_pixel(T r, T g, T b, T a) {
+			red = r;
+			green = g;
+			blue = b;
+			alpha = a;
+		}
+
+	};
+
+	typedef _pixel<uchar> pixel8;
+	typedef _pixel<ushort> pixel16;
+	typedef _pixel<float> pixel32;
 
 #pragma endregion
 
-#pragma region pixel define
-
-template <typename T>
-struct _mop_pixel {
-
-	T red;
-	T green;
-	T blue;
-	T alpha;
-
-	_mop_pixel(T r, T g, T b, T a) {
-		red = r;
-		green = g;
-		blue = b;
-		alpha = a;
-	}
-
-};
-
-typedef _mop_pixel<uchar> mop_pixel8;
-typedef _mop_pixel<ushort> mop_pixel16;
-typedef _mop_pixel<float> mop_pixel32;
-
-#pragma endregion
+}

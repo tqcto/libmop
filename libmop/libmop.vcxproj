@@ -22,10 +22,12 @@
     <ClInclude Include="include\deflate\define.h" />
     <ClInclude Include="include\deflate\deflate.hpp" />
     <ClInclude Include="include\libmop.h" />
+    <ClInclude Include="include\matrix.hpp" />
     <ClInclude Include="include\wrap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\libmop.cpp" />
+    <ClCompile Include="source\matrix.cpp" />
     <ClCompile Include="source\wrap.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -90,11 +92,13 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\..\build\Debug</OutDir>
     <IntDir>.\objects\Debug</IntDir>
+    <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\..\build\Release</OutDir>
     <IntDir>.\objects\Release</IntDir>
+    <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
