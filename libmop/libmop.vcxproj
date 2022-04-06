@@ -27,7 +27,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\libmop.cpp" />
-    <ClCompile Include="source\matrix.cpp" />
     <ClCompile Include="source\wrap.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

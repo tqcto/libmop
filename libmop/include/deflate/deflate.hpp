@@ -77,13 +77,13 @@ namespace mop {
 
 	}color_type;
 
-	template <typename T>
-	struct _pixel {
+	template <typename T> struct _pixel;
+	template <>	struct _pixel<uchar> {
 
-		T red;
-		T green;
-		T blue;
-		T alpha;
+		uchar red;
+		uchar green;
+		uchar blue;
+		uchar alpha;
 
 		_pixel(void) {
 			red = 0x00;
@@ -91,7 +91,49 @@ namespace mop {
 			blue = 0x00;
 			alpha = 0x00;
 		}
-		_pixel(T r, T g, T b, T a) {
+		_pixel(uchar r, uchar g, uchar b, uchar a) {
+			red = r;
+			green = g;
+			blue = b;
+			alpha = a;
+		}
+
+	};
+	template <>	struct _pixel<ushort> {
+
+		ushort red;
+		ushort green;
+		ushort blue;
+		ushort alpha;
+
+		_pixel(void) {
+			red = 0x00;
+			green = 0x00;
+			blue = 0x00;
+			alpha = 0x00;
+		}
+		_pixel(ushort r, ushort g, ushort b, ushort a) {
+			red = r;
+			green = g;
+			blue = b;
+			alpha = a;
+		}
+
+	};
+	template <>	struct _pixel<float> {
+
+		float red;
+		float green;
+		float blue;
+		float alpha;
+
+		_pixel(void) {
+			red = 0x00;
+			green = 0x00;
+			blue = 0x00;
+			alpha = 0x00;
+		}
+		_pixel(float r, float g, float b, float a) {
 			red = r;
 			green = g;
 			blue = b;

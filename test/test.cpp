@@ -5,7 +5,7 @@
 
 int main(void) {
 
-	mop::matrix mat(1920, 1080, mop::color_type::RGBA);
+	mop::matrix<mop::uchar> mat(1920, 1080, mop::color_type::RGBA);
 
 	if (mat.empty()) {
 		printf("empty.\n");
