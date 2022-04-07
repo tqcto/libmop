@@ -67,16 +67,6 @@ namespace mop {
 
 	};
 
-	typedef enum {
-
-		GRAY = 0,
-		RGB,
-		RGBA,
-		BGR,
-		BGRA
-
-	}color_type;
-
 	template <typename T> struct _pixel;
 	template <>	struct _pixel<uchar> {
 

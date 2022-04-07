@@ -33,12 +33,18 @@
     <ClInclude Include="include\matrix.hpp">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="include\accelerator.hpp">
+      <Filter>Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\libmop.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="source\wrap.c">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\accelerator.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,5 +1,12 @@
 #pragma once
 #include "deflate/deflate.hpp"
+#include "accelerator.hpp"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <amp.h>
+#include <ppl.h>
 
 namespace mop {
 
@@ -11,15 +18,27 @@ namespace mop {
 		bool _empty = true;
 
 		int	_width = 0,
-			_height = 0,
-			_channel = 0;
+			_height = 0;/*,
+			_channel = 0;*/
+
+		//concurrency::accelerator* accel;
+
+		void init_loop_x(int y) {
+			for (int x = 0; x < this->_width; x++) {
+				_pixel<T>* d = &this->data[y * this->_width + x];
+				
+				d->red = 0x00;
+				d->green = 0x00;
+				d->blue = 0x00;
+				d->alpha = 0x00;
+			}
+		}
 
 	public:
-		//typedef _pixel<T> pix;
 		_pixel<T>* data;
 
 		DLL_EXPORT matrix(void) : _empty(true) {};
-		DLL_EXPORT matrix(int w, int h, color_type c) {
+		DLL_EXPORT matrix(int w, int h) {
 
 			if (w <= 0 || h <= 0) return;
 
@@ -28,7 +47,7 @@ namespace mop {
 			this->_width = w;
 			this->_height = h;
 
-			switch (c) {
+			/*switch (c) {
 
 			case color_type::GRAY:
 				this->_channel = 1;
@@ -44,15 +63,33 @@ namespace mop {
 				this->_channel = 4;
 				break;
 
-			}
+			}*/
+
+			int data_size = w * h;
+
+			//*accel = acs[0];
+
+			this->data = (_pixel<T>*)malloc(sizeof(_pixel<T>) * data_size);
+
+			concurrency::parallel_for(0, h, [&](int y){
+				init_loop_x(y);
+			});
 
 		}
 
-		DLL_EXPORT inline int width(void) { return this->_width; }
-		DLL_EXPORT inline int height(void) { return this->_height; }
-		DLL_EXPORT inline int channel(void) { return this->_channel; }
+		#pragma region getter
+		DLL_EXPORT inline int width(void) const { return this->_width; }
+		DLL_EXPORT inline int height(void) const { return this->_height; }
+		//DLL_EXPORT inline int channel(void) { return this->_channel; }
 
-		DLL_EXPORT inline bool empty(void) { return this->_empty; }
+		DLL_EXPORT inline bool empty(void) const { return this->_empty; }
+		#pragma endregion
+
+		_pixel<T>* access(int x, int y) const {
+
+			return &this->data[y * this->_width + x];
+
+		}
 
 	};
 
