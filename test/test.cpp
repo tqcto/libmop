@@ -8,6 +8,8 @@
 
 int main(void) {
 
+    printf("uchar:%d ushort:%d float:%d\n", sizeof(unsigned char), sizeof(unsigned short), sizeof(float));
+
     int width = 1280,
         height = 720;
 
@@ -19,6 +21,8 @@ int main(void) {
 	}
 
 	printf("w:%d h:%d\n", mat.width(), mat.height());
+
+    view_data(make_new_window(), &mat.data, width, height, mat.channel());
 
 	getchar();
 

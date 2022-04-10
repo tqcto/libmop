@@ -39,6 +39,9 @@
     <ClInclude Include="include\accelerator.hpp">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="include\winutil.h">
+      <Filter>Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\libmop.cpp">
@@ -52,6 +55,9 @@
     </ClCompile>
     <ClCompile Include="include\gpu_calc.cuh">
       <Filter>cuda</Filter>
+    </ClCompile>
+    <ClCompile Include="source\winutil.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

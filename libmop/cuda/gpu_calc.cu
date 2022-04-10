@@ -8,12 +8,11 @@ DLL_EXPORT __host__ void initialize(unsigned char** data, int w, int h, int c) {
 
 	cudaMalloc((void**)&dst, sizeof(unsigned char) * size);
 
-	data_init_gpu << <size, c >> > (dst);
+	data_init_gpu << <w * h, c >> > (dst);
 
-	cudaMemcpy(data, dst, sizeof(unsigned char) * size, cudaMemcpyDeviceToHost);
+	cudaMemcpy(*data, dst, sizeof(unsigned char) * size, cudaMemcpyDeviceToHost);
 
 }
-
 __global__ void data_init_gpu(unsigned char* dst) {
 
 	int ID = blockIdx.x * blockDim.x + threadIdx.x;

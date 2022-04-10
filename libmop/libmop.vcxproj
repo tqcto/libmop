@@ -28,11 +28,13 @@
     <ClInclude Include="include\deflate\deflate.hpp" />
     <ClInclude Include="include\libmop.h" />
     <ClInclude Include="include\matrix.hpp" />
+    <ClInclude Include="include\winutil.h" />
     <ClInclude Include="include\wrap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\accelerator.cpp" />
     <ClCompile Include="source\libmop.cpp" />
+    <ClCompile Include="source\winutil.cpp" />
     <ClCompile Include="source\wrap.c" />
   </ItemGroup>
   <ItemGroup>

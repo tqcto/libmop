@@ -69,7 +69,7 @@ namespace mop {
 		#pragma region getter
 		DLL_EXPORT inline int width(void) const { return this->_width; }
 		DLL_EXPORT inline int height(void) const { return this->_height; }
-		//DLL_EXPORT inline int channel(void) { return this->_channel; }
+		DLL_EXPORT inline int channel(void) { return this->_channel; }
 
 		DLL_EXPORT inline bool empty(void) const { return this->_empty; }
 		#pragma endregion
