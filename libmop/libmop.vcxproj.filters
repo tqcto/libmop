@@ -16,6 +16,9 @@
     <Filter Include="Header\deflate">
       <UniqueIdentifier>{f5ad9e08-1b7a-4300-aa41-5042a0d732bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cuda">
+      <UniqueIdentifier>{25862da5-ac51-40ac-b6bf-1a17b941d5ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\libmop.h">
@@ -47,5 +50,13 @@
     <ClCompile Include="source\accelerator.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="include\gpu_calc.cuh">
+      <Filter>cuda</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="cuda\gpu_calc.cu">
+      <Filter>cuda</Filter>
+    </CudaCompile>
   </ItemGroup>
 </Project>

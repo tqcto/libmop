@@ -1,6 +1,6 @@
 #pragma once
 #include "deflate/deflate.hpp"
-#include "accelerator.hpp"
+#include "gpu_calc.cuh"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,7 +10,6 @@
 
 namespace mop {
 
-	template <typename T>
 	class matrix {
 
 	private:
@@ -18,27 +17,16 @@ namespace mop {
 		bool _empty = true;
 
 		int	_width = 0,
-			_height = 0;/*,
-			_channel = 0;*/
+			_height = 0,
+			_channel = 0;
 
-		//concurrency::accelerator* accel;
-
-		void init_loop_x(int y) {
-			for (int x = 0; x < this->_width; x++) {
-				_pixel<T>* d = &this->data[y * this->_width + x];
-				
-				d->red = 0x00;
-				d->green = 0x00;
-				d->blue = 0x00;
-				d->alpha = 0x00;
-			}
-		}
+		color_type _color;
 
 	public:
-		_pixel<T>* data;
+		uchar* data;
 
 		DLL_EXPORT matrix(void) : _empty(true) {};
-		DLL_EXPORT matrix(int w, int h) {
+		DLL_EXPORT matrix(int w, int h, color_type c) {
 
 			if (w <= 0 || h <= 0) return;
 
@@ -46,34 +34,35 @@ namespace mop {
 
 			this->_width = w;
 			this->_height = h;
+			this->_color = c;
 
-			/*switch (c) {
+			switch (c) {
 
 			case color_type::GRAY:
 				this->_channel = 1;
 				break;
 
-			case color_type::BGR:
 			case color_type::RGB:
 				this->_channel = 3;
 				break;
 
 			case color_type::RGBA:
-			case color_type::BGRA:
 				this->_channel = 4;
 				break;
 
-			}*/
+			}
 
-			int data_size = w * h;
+			int data_size = w * h * this->_channel;
 
-			//*accel = acs[0];
+			this->data = (uchar*)malloc(sizeof(uchar) * data_size);
 
-			this->data = (_pixel<T>*)malloc(sizeof(_pixel<T>) * data_size);
+			initialize(&this->data, this->_width, this->_height, this->_channel);
 
+			/*
 			concurrency::parallel_for(0, h, [&](int y){
 				init_loop_x(y);
 			});
+			*/
 
 		}
 
@@ -85,7 +74,7 @@ namespace mop {
 		DLL_EXPORT inline bool empty(void) const { return this->_empty; }
 		#pragma endregion
 
-		_pixel<T>* access(int x, int y) const {
+		uchar* access(int x, int y) const {
 
 			return &this->data[y * this->_width + x];
 

@@ -67,6 +67,15 @@ namespace mop {
 
 	};
 
+	typedef enum {
+
+		GRAY = 0,
+		RGB,
+		RGBA,
+
+	}color_type;
+
+	/*
 	template <typename T> struct _pixel;
 	template <>	struct _pixel<uchar> {
 
@@ -135,6 +144,7 @@ namespace mop {
 	typedef _pixel<uchar> pixel8;
 	typedef _pixel<ushort> pixel16;
 	typedef _pixel<float> pixel32;
+	*/
 
 #pragma endregion
 

@@ -4,9 +4,14 @@
 #include <string.h>
 #include "libmop.h"
 
+#include "cuda.cuh"
+
 int main(void) {
 
-	mop::matrix<mop::uchar> mat(1280, 720);
+    int width = 1280,
+        height = 720;
+
+	mop::matrix mat(width, height, mop::color_type::RGBA);
 
 	if (mat.empty()) {
 		printf("empty.\n");
