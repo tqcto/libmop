@@ -35,46 +35,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\accelerator.hpp" />
-    <ClInclude Include="include\gpu_calc.cuh">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='static_debug|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='static_release|x64'">false</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="include\deflate\define.h" />
     <ClInclude Include="include\deflate\deflate.hpp" />
     <ClInclude Include="include\libmop.h" />
     <ClInclude Include="include\matrix.hpp" />
     <ClInclude Include="include\winutil.h" />
     <ClInclude Include="include\wrap.h" />
-    <ClInclude Include="include\xorshift_rng.cuh">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='static_debug|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='static_release|x64'">false</ExcludedFromBuild>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\accelerator.cpp" />
-    <ClCompile Include="source\libmop.cpp" />
+    <ClCompile Include="source\matrix.cpp" />
     <ClCompile Include="source\winutil.cpp" />
     <ClCompile Include="source\wrap.c" />
-  </ItemGroup>
-  <ItemGroup>
-    <CudaCompile Include="cuda\gpu_calc.cu">
-      <FileType>Document</FileType>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='static_debug|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='static_release|x64'">false</ExcludedFromBuild>
-    </CudaCompile>
-    <CudaCompile Include="cuda\xorshift_rng.cu">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='static_debug|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='static_release|x64'">false</ExcludedFromBuild>
-    </CudaCompile>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -137,9 +108,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="ExtensionSettings">
-    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 11.6.props" />
-  </ImportGroup>
+  <ImportGroup Label="ExtensionSettings" />
   <ImportGroup Label="Shared">
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -169,39 +138,43 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>F:\Visual Studio Librarys\jpeg;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='static_debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>F:\Visual Studio Librarys\jpeg;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>F:\Visual Studio Librarys\jpeg;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='static_release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>F:\Visual Studio Librarys\jpeg;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\..\build\Debug</OutDir>
     <IntDir>.\objects\Debug</IntDir>
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>F:\Visual Studio Librarys\jpeg;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='static_debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\..\build\static_debug</OutDir>
     <IntDir>.\objects\static_debug</IntDir>
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>F:\Visual Studio Librarys\jpeg;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\..\build\Release</OutDir>
     <IntDir>.\objects\Release</IntDir>
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>F:\Visual Studio Librarys\jpeg;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='static_release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\..\build\static_release</OutDir>
     <IntDir>.\objects\static_release</IntDir>
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>F:\Visual Studio Librarys\jpeg;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -216,6 +189,8 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalLibraryDirectories>F:\Visual Studio Librarys\jpeg\Release\Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>jpeg.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='static_debug|Win32'">
@@ -231,6 +206,8 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalLibraryDirectories>F:\Visual Studio Librarys\jpeg\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>jpeg.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -250,6 +227,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalLibraryDirectories>F:\Visual Studio Librarys\jpeg\Release\Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>jpeg.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='static_release|Win32'">
@@ -269,6 +248,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalLibraryDirectories>F:\Visual Studio Librarys\jpeg\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>jpeg.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -289,8 +270,8 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.6\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>cudart_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>F:\Visual Studio Librarys\jpeg\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>jpeg.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(TargetDir)libmop.lib" "$(SolutionDir)..\release\dynamic\lib\libmopd.lib"
@@ -335,6 +316,10 @@ xcopy "$(ProjectDir)include\deflate\" "$(SolutionDir)..\release\static\include\d
       <CompileOut>.\objects\Debug\%(Filename)%(Extension).obj</CompileOut>
       <Runtime>MDd</Runtime>
     </CudaCompile>
+    <Lib>
+      <AdditionalLibraryDirectories>F:\Visual Studio Librarys\jpeg\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>jpeg.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -358,8 +343,8 @@ xcopy "$(ProjectDir)include\deflate\" "$(SolutionDir)..\release\static\include\d
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.6\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>cudart_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>F:\Visual Studio Librarys\jpeg\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>jpeg.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(TargetDir)libmop.lib" "$(SolutionDir)..\release\dynamic\lib\libmop.lib"
@@ -408,9 +393,11 @@ xcopy "$(ProjectDir)include\deflate\" "$(SolutionDir)..\release\static\include\d
       <CompileOut>.\objects\Release\%(Filename)%(Extension).obj</CompileOut>
       <Runtime>MD</Runtime>
     </CudaCompile>
+    <Lib>
+      <AdditionalLibraryDirectories>F:\Visual Studio Librarys\jpeg\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>jpeg.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 11.6.targets" />
-  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets" />
 </Project>

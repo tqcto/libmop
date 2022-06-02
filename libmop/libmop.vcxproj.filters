@@ -16,9 +16,6 @@
     <Filter Include="Header\deflate">
       <UniqueIdentifier>{f5ad9e08-1b7a-4300-aa41-5042a0d732bf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cuda">
-      <UniqueIdentifier>{25862da5-ac51-40ac-b6bf-1a17b941d5ff}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\libmop.h">
@@ -36,39 +33,19 @@
     <ClInclude Include="include\matrix.hpp">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="include\accelerator.hpp">
-      <Filter>Header</Filter>
-    </ClInclude>
     <ClInclude Include="include\winutil.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="include\xorshift_rng.cuh">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="include\gpu_calc.cuh">
-      <Filter>cuda</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\libmop.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="source\wrap.c">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\accelerator.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="source\winutil.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <CudaCompile Include="cuda\gpu_calc.cu">
-      <Filter>cuda</Filter>
-    </CudaCompile>
-    <CudaCompile Include="cuda\xorshift_rng.cu">
-      <Filter>cuda</Filter>
-    </CudaCompile>
+    <ClCompile Include="source\matrix.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

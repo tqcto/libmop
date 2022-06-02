@@ -18,6 +18,5 @@ extern "C" {
 */
 
 extern "C++" {
-#include "accelerator.hpp"
 #include "matrix.hpp"
 }

@@ -4,8 +4,9 @@
 
 namespace mop {
 
-	typedef unsigned char uchar;
-	typedef unsigned short ushort;
+	typedef unsigned char	uchar;
+	typedef unsigned short	ushort;
+	typedef unsigned int	uint;
 
 	#pragma region vector define
 
@@ -169,6 +170,17 @@ namespace mop {
 	typedef _pixel<ushort> pixel16;
 	typedef _pixel<float> pixel32;
 	//*/
+
+	#pragma region libjpeg
+
+	typedef struct {
+		uchar*	data;
+		uint*	width;
+		uint*	height;
+		uint*	ch;
+	}BITMAPDATA_t;
+
+	#pragma endregion
 
 #pragma endregion
 
