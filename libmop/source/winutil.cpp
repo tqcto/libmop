@@ -1,6 +1,6 @@
 #include "../include/winutil.h"
 
-DLL_EXPORT HWND make_new_window(void) {
+DLL_EXPORT HWND make_new_window(WNDPROC proc) {
 
 	HINSTANCE hinst = GetModuleHandle(NULL);
 
@@ -8,7 +8,7 @@ DLL_EXPORT HWND make_new_window(void) {
 	
 	WNDCLASS wc;
 	wc.style = CS_HREDRAW | CS_VREDRAW;
-	wc.lpfnWndProc = DefWindowProc;
+	wc.lpfnWndProc = proc == nullptr ? DefWindowProc : proc;
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
 	wc.hInstance = hinst;
@@ -35,7 +35,7 @@ DLL_EXPORT HWND make_new_window(void) {
 
 }
 
-DLL_EXPORT void view_data(HWND hwnd, unsigned char** data, int width, int height, int channel) {
+DLL_EXPORT void view_data(HWND hwnd, void** data, int width, int height, int channel, int bit) {
 
 	RECT rec;
 	GetWindowRect(hwnd, &rec);
@@ -43,12 +43,15 @@ DLL_EXPORT void view_data(HWND hwnd, unsigned char** data, int width, int height
 	HDC hdc = GetDC(hwnd);
 
 	BITMAPINFO info;
-	info.bmiHeader.biBitCount = 24;
+	info.bmiHeader.biBitCount = 8 * bit;//8 * bit * 3;//24;
 	info.bmiHeader.biWidth = width;
 	info.bmiHeader.biHeight = -height;
 	info.bmiHeader.biPlanes = 1;
 	info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-	info.bmiHeader.biCompression = BI_RGB;
+
+	if (bit == 1) info.bmiHeader.biCompression = BI_RGB;
+	if (bit != 1) info.bmiHeader.biCompression = BI_BITFIELDS;
+
 	info.bmiHeader.biClrImportant = 0;
 	info.bmiHeader.biClrUsed = 0;
 	info.bmiHeader.biSizeImage = 0;

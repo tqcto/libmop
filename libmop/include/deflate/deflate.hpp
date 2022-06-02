@@ -73,9 +73,33 @@ namespace mop {
 		RGB,
 		RGBA,
 
+	}color_channel;
+
+	typedef enum {
+
+		U8 = 8,
+		U16 = 16,
+		U32 = 32,
+
+	}color_bit;
+
+	typedef struct _color_type {
+
+		color_channel ch;
+		color_bit bit;
+
+		_color_type(void) {
+			ch	= RGBA;
+			bit	= U8;
+		}
+		_color_type(color_channel c, color_bit b) {
+			ch	= c;
+			bit	= b;
+		}
+
 	}color_type;
 
-	/*
+	///*
 	template <typename T> struct _pixel;
 	template <>	struct _pixel<uchar> {
 
@@ -144,7 +168,7 @@ namespace mop {
 	typedef _pixel<uchar> pixel8;
 	typedef _pixel<ushort> pixel16;
 	typedef _pixel<float> pixel32;
-	*/
+	//*/
 
 #pragma endregion
 

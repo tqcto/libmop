@@ -12,6 +12,11 @@ extern "C" {
 
 #include "winutil.h"
 
+/*
+#include "gpu_calc.cuh"
+#include "xorshift_rng.cuh"
+*/
+
 extern "C++" {
 #include "accelerator.hpp"
 #include "matrix.hpp"

@@ -6,29 +6,58 @@
 
 #include "cuda.cuh"
 
+#define BMP_FILE "F:\\SS\\画像171.bmp"
+
+LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+
+int width = 1280,
+    height = 720;
+
+HWND hwnd = nullptr;
+
+mop::matrix<unsigned short> mat(width, height, mop::color_channel::RGBA);
+
 int main(void) {
 
     printf("uchar:%d ushort:%d float:%d\n", sizeof(unsigned char), sizeof(unsigned short), sizeof(float));
-
-    int width = 1280,
-        height = 720;
-
-	mop::matrix mat(width, height, mop::color_type::RGBA);
 
 	if (mat.empty()) {
 		printf("empty.\n");
 		return 1;
 	}
 
-	printf("w:%d h:%d\n", mat.width(), mat.height());
+    printf("w:%d h:%d\nchannels:%d\n", mat.width(), mat.height(), mat.channel());//, mat.bit());
+    printf("rowbytes:%d\n", mat.rowbytes());
 
-    view_data(make_new_window(), &mat.data, width, height, mat.channel());
+    if (hwnd == nullptr) hwnd = make_new_window(WndProc);
+    view_data(hwnd, (void**)&mat.data, width, height, mat.channel(), mat.bit());
+
+    MSG msg;
+    while (GetMessage(&msg, NULL, 0, 0) > 0) {
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
 
 	getchar();
 
 	return 0;
 
 }
+
+LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+    switch (uMsg) {
+    case WM_DESTROY:
+        PostQuitMessage(0);
+        return 0;
+    case WM_PAINT:
+    //default:
+        view_data(hwnd, (void**)&mat.data, width, height, mat.channel(), mat.bit());
+    }
+
+    return DefWindowProc(hwnd, uMsg, wParam, lParam);
+}
+
 //*/
 /*
 #include <amp.h>

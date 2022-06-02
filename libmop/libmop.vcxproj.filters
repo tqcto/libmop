@@ -42,6 +42,12 @@
     <ClInclude Include="include\winutil.h">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="include\xorshift_rng.cuh">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gpu_calc.cuh">
+      <Filter>cuda</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\libmop.cpp">
@@ -53,15 +59,15 @@
     <ClCompile Include="source\accelerator.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="include\gpu_calc.cuh">
-      <Filter>cuda</Filter>
-    </ClCompile>
     <ClCompile Include="source\winutil.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="cuda\gpu_calc.cu">
+      <Filter>cuda</Filter>
+    </CudaCompile>
+    <CudaCompile Include="cuda\xorshift_rng.cu">
       <Filter>cuda</Filter>
     </CudaCompile>
   </ItemGroup>
