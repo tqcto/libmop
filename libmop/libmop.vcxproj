@@ -39,11 +39,13 @@
     <ClInclude Include="include\deflate\deflate.hpp" />
     <ClInclude Include="include\libmop.h" />
     <ClInclude Include="include\matrix.hpp" />
+    <ClInclude Include="include\reader.hpp" />
     <ClInclude Include="include\winutil.h" />
     <ClInclude Include="include\wrap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\matrix.cpp" />
+    <ClCompile Include="source\reader.cpp" />
     <ClCompile Include="source\winutil.cpp" />
     <ClCompile Include="source\wrap.c" />
   </ItemGroup>

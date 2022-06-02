@@ -36,6 +36,9 @@
     <ClInclude Include="include\winutil.h">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="include\reader.hpp">
+      <Filter>Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\wrap.c">
@@ -45,6 +48,9 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="source\matrix.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\reader.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>

@@ -173,11 +173,20 @@ namespace mop {
 
 	#pragma region libjpeg
 
-	typedef struct {
+	typedef struct bmp_t {
+
 		uchar*	data;
-		uint*	width;
-		uint*	height;
-		uint*	ch;
+		uint	width;
+		uint	height;
+		uint	ch;
+
+		bmp_t(void) {
+			data = nullptr;
+			width	= 0;
+			height	= 0;
+			ch		= 0;
+		}
+
 	}BITMAPDATA_t;
 
 	#pragma endregion
