@@ -11,8 +11,20 @@ using namespace mop;
 
 int main(void) {
 
-    matrix mat(BMP_FILE);
-    mat.encode(ENCODE_F);
+    matrix src(BMP_FILE);
+    matrix dst(src.width(), src.height(), color_number::RGB);
+
+    for (int y = 0; y < src.height(); y++) {
+        for (int x = 0; x < src.width(); x++) {
+            for (int c = 0; c < src.channel(); c++) {
+
+                *dst.ac(x, y, c) = 0xFF;//*src.ac(x, y, src.channel() - c);
+
+            }
+        }
+    }
+
+    dst.encode(ENCODE_F);
 
     return 0;
 

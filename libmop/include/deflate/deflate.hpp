@@ -70,11 +70,11 @@ namespace mop {
 
 	typedef enum {
 
-		GRAY = 0,
-		RGB,
+		GRAY = 1,
+		RGB = 3,
 		RGBA,
 
-	}color_channel;
+	}color_number;
 
 	typedef enum {
 
@@ -83,22 +83,6 @@ namespace mop {
 		U32 = 32,
 
 	}color_bit;
-
-	typedef struct _color_type {
-
-		color_channel ch;
-		color_bit bit;
-
-		_color_type(void) {
-			ch	= RGBA;
-			bit	= U8;
-		}
-		_color_type(color_channel c, color_bit b) {
-			ch	= c;
-			bit	= b;
-		}
-
-	}color_type;
 
 	///*
 	template <typename T> struct _pixel;
