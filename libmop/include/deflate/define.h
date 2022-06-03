@@ -4,6 +4,14 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
+#ifndef MIN
+#  define MIN(a,b)  ((a) > (b) ? (b) : (a))
+#endif
+
+#ifndef MAX
+#  define MAX(a,b)  ((a) < (b) ? (b) : (a))
+#endif
+
 #ifndef DLL_EXPORT
 #define DLL_EXPORT __declspec(dllexport)
 #endif

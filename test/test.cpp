@@ -12,8 +12,12 @@ using namespace mop;
 int main(void) {
 
     matrix src(BMP_FILE);
-    matrix dst(src.width(), src.height(), color_number::RGB);
+    matrix dst(&src);
 
+    dst.Resize(0.1, 0.1);
+    printf("w:%d, h:%d\n", dst.width(), dst.height());
+
+    /*
     for (int y = 0; y < src.height(); y++) {
         for (int x = 0; x < src.width(); x++) {
             for (int c = 0; c < src.channel(); c++) {
@@ -23,6 +27,7 @@ int main(void) {
             }
         }
     }
+    */
 
     dst.encode(ENCODE_F);
 
