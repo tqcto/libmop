@@ -84,6 +84,14 @@ namespace mop {
 
 	}color_bit;
 
+	typedef enum {
+
+		repeat_none,
+		repeat_normal,
+		repeat_mirror
+
+	}repeat_mode;
+
 	///*
 	template <typename T> struct _pixel;
 	template <>	struct _pixel<uchar> {

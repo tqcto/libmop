@@ -18,5 +18,6 @@ extern "C" {
 */
 
 extern "C++" {
+#include "reader.hpp"
 #include "matrix.hpp"
 }

@@ -1,10 +1,11 @@
 #include "..\include\matrix.hpp"
 
-#include "..\include\reader.hpp"
+#include "..\include\libmop.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #include <jpeglib.h>
 
@@ -141,6 +142,88 @@ namespace mop {
 					}
 
 				}
+			}
+		}
+
+		free(src);
+
+	}
+	DLL_EXPORT void matrix::Rotate(double angle, repeat_mode mode, int cx, int cy) {
+
+		int w = this->bmp.width,
+			h = this->bmp.height;
+
+		int hw = round((double)w / 2.0),
+			hh = round((double)h / 2.0);
+
+		double ox, oy;
+		int x0, y0;
+
+		int min_x = 0, min_y = 0, max_x = 0, max_y = 0;
+
+		angle = angle * M_PI / 180.0;
+
+		for (int y = 0; y < h; y += (h - 1)) {
+			for (int x = 0; x < w; x += (w - 1)) {
+				ox =  ((cx + x) - hw) * cos(angle) + ((cy + y) - hh) * sin(angle) + hw;
+				oy = -((cx + x) - hw) * sin(angle) + ((cy + y) - hh) * cos(angle) + hh;
+				min_x = ox < min_x ? ox : min_x;
+				min_y = oy < min_y ? oy : min_y;
+				max_x = max_x < ox ? ox : max_x;
+				max_y = max_y < oy ? oy : max_y;
+			}
+		}
+
+		int aw = abs(min_x) + max_x,
+			ah = abs(min_y) + max_y;
+
+		uchar* src = (uchar*)malloc(sizeof(uchar) * w * h * this->bmp.ch);
+		memcpy(src, this->bmp.data, w * h * this->bmp.ch);
+
+		free(this->bmp.data);
+		this->bmp.data = (uchar*)malloc(sizeof(uchar) * w * h * this->bmp.ch);
+		//this->bmp.data = (uchar*)malloc(sizeof(uchar) * aw * ah * this->bmp.ch);
+		//this->bmp.width		= aw;
+		//this->bmp.height	= ah;
+
+		for (int y = 0; y < h; y++) {
+			for (int x = 0; x < w; x++) {
+
+				ox =  ((cx + x) - hw) * cos(angle) + ((cy + y) - hh) * sin(angle) + hw;
+				oy = -((cx + x) - hw) * sin(angle) + ((cy + y) - hh) * cos(angle) + hh;
+
+				x0 = ox + 0.5;
+				y0 = oy + 0.5;
+
+				switch (mode) {
+				case repeat_mode::repeat_none:
+					if (0 <= x0 && x0 < w && 0 <= y0 && y0 < h) {
+						for (int c = 0; c < this->bmp.ch; c++) {
+							*ac(x, y, c) = src[this->bmp.ch * (x0 + y0 * w) + c];
+						}
+					}
+					else {
+						for (int c = 0; c < this->bmp.ch; c++) {
+							*ac(x, y, c) = 0x00;
+						}
+					}
+					break;
+				case repeat_mode::repeat_normal:
+					x0 = repeat(x0, w - 1);
+					y0 = repeat(y0, h - 1);
+					for (int c = 0; c < this->bmp.ch; c++) {
+						*ac(x, y, c) = src[this->bmp.ch * (x0 + y0 * w) + c];
+					}
+					break;
+				case repeat_mode::repeat_mirror:
+					x0 = mirror(x0, w - 1);
+					y0 = mirror(y0, h - 1);
+					for (int c = 0; c < this->bmp.ch; c++) {
+						*ac(x, y, c) = src[this->bmp.ch * (x0 + y0 * w) + c];
+					}
+					break;
+				}				
+
 			}
 		}
 

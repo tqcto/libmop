@@ -14,7 +14,8 @@ int main(void) {
     matrix src(BMP_FILE);
     matrix dst(&src);
 
-    dst.Resize(0.1, 0.1);
+    //dst.Resize(0.5, 0.5);
+    dst.Rotate(20.0, repeat_mirror);
     printf("w:%d, h:%d\n", dst.width(), dst.height());
 
     /*

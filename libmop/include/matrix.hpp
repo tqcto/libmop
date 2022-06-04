@@ -29,6 +29,7 @@ namespace mop {
 
 		#pragma region matrix op
 		DLL_EXPORT void Resize(double size_w, double size_h);
+		DLL_EXPORT void Rotate(double angle, repeat_mode mode = repeat_none, int cx = 0, int cy = 0);
 		#pragma endregion
 
 		DLL_EXPORT int encode(const char* filename, int quality = 50);
