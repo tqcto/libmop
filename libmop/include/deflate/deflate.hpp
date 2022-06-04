@@ -84,6 +84,10 @@ namespace mop {
 
 	}color_bit;
 
+	/**
+	* @enum repeat_mode
+	* 画像データのリピート方式を指定します。
+	*/
 	typedef enum {
 
 		repeat_none,

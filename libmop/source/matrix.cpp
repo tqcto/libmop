@@ -91,7 +91,7 @@ namespace mop {
 
 	}
 
-	DLL_EXPORT uchar* matrix::ac(int x, int y, int c) {
+	DLL_EXPORT uchar* matrix::access(int x, int y, int c) {
 
 		return &this->bmp.data[this->bmp.ch * (x + y * this->bmp.width) + c];
 
@@ -134,7 +134,7 @@ namespace mop {
 				for (int c = 0; c < this->bmp.ch; c++) {
 
 					if (x < aw && y < ah) {
-						*ac(x, y, c) =
+						*access(x, y, c) =
 								src[this->bmp.ch * (x1 + y1 * w) + c] * dx * dy
 							+	src[this->bmp.ch * (x1 + y0 * w) + c] * dx * (1 - dy)
 							+	src[this->bmp.ch * (x0 + y1 * w) + c] * (1 - dx) * dy
@@ -199,12 +199,12 @@ namespace mop {
 				case repeat_mode::repeat_none:
 					if (0 <= x0 && x0 < w && 0 <= y0 && y0 < h) {
 						for (int c = 0; c < this->bmp.ch; c++) {
-							*ac(x, y, c) = src[this->bmp.ch * (x0 + y0 * w) + c];
+							*access(x, y, c) = src[this->bmp.ch * (x0 + y0 * w) + c];
 						}
 					}
 					else {
 						for (int c = 0; c < this->bmp.ch; c++) {
-							*ac(x, y, c) = 0x00;
+							*access(x, y, c) = 0x00;
 						}
 					}
 					break;
@@ -212,14 +212,14 @@ namespace mop {
 					x0 = repeat(x0, w - 1);
 					y0 = repeat(y0, h - 1);
 					for (int c = 0; c < this->bmp.ch; c++) {
-						*ac(x, y, c) = src[this->bmp.ch * (x0 + y0 * w) + c];
+						*access(x, y, c) = src[this->bmp.ch * (x0 + y0 * w) + c];
 					}
 					break;
 				case repeat_mode::repeat_mirror:
 					x0 = mirror(x0, w - 1);
 					y0 = mirror(y0, h - 1);
 					for (int c = 0; c < this->bmp.ch; c++) {
-						*ac(x, y, c) = src[this->bmp.ch * (x0 + y0 * w) + c];
+						*access(x, y, c) = src[this->bmp.ch * (x0 + y0 * w) + c];
 					}
 					break;
 				}				
