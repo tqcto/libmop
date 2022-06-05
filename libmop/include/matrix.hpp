@@ -13,19 +13,44 @@ namespace mop {
 
 	public:
 
-		DLL_EXPORT matrix(void) : _empty(1) {};
+		/**
+		* @fn
+		* @brief 空のクラスを作成するコンストラクタです。これを使用した場合メモリが確保されないので、data_malloc 関数を利用するなどしてメモリを確保する必要があります。
+		*/
+		DLL_EXPORT matrix(void) noexcept : _empty(1) {};
+		/**
+		* @fn
+		* @brief 画像ファイルを読み込みます。
+		* @param filename 画像ファイルパス
+		*/
 		DLL_EXPORT matrix(const char* filename);
+		/**
+		* @fn
+		* @brief 既存の画像クラスをコピーします。
+		* @param src 画像クラスのポインタ
+		*/
 		DLL_EXPORT matrix(matrix* src);
+		/**
+		* @fn
+		* @brief サイズを指定して画像データを作成します。
+		* @param width 行数
+		* @param height 列数
+		* @param channels 色素数
+		*/
 		DLL_EXPORT matrix(int width, int height, int channels);
 
+		/**
+		* @fn
+		* @brief デストラクタです。画像データのメモリの解放などを行います。
+		*/
 		DLL_EXPORT ~matrix(void);
 
 		#pragma region memory setup
 		/**
 		* @fn
 		* @brief 画像データのメモリを確保します。
-		* @param width 列数
-		* @param height 行数
+		* @param width 行数
+		* @param height 列数
 		* @param channels 色素数
 		* @return メモリが確保できた場合は0、できなかった場合は-1以下を返します。
 		*/
@@ -40,8 +65,8 @@ namespace mop {
 		/**
 		* @fn
 		* @brief 指定した座標の画素データを取得します。
-		* @param x 列番号
-		* @param y 行番号
+		* @param x 行番号
+		* @param y 列番号
 		* @param c 色素番号
 		* @return 画素データのポインタを返します。
 		*/
@@ -51,8 +76,8 @@ namespace mop {
 		/**
 		* @fn
 		* @brief 画像データをサイズ変更します。
-		* @param size_w(%) 列サイズ
-		* @param size_h(%) 行サイズ
+		* @param size_w(%) 行サイズ
+		* @param size_h(%) 列サイズ
 		*/
 		DLL_EXPORT void Resize(double size_w, double size_h);
 		/**
@@ -60,8 +85,8 @@ namespace mop {
 		* @brief 画像データを回転します。
 		* @param angle 回転角度
 		* @param mode 外部点のラッピング補完方法指定
-		* @param cx 列方向の中心軸
-		* @param cy 行方向の中心軸
+		* @param cx 行方向の中心軸
+		* @param cy 列方向の中心軸
 		*/
 		DLL_EXPORT void Rotate(double angle, repeat_mode mode = repeat_none, int cx = 0, int cy = 0);
 		#pragma endregion
@@ -76,11 +101,31 @@ namespace mop {
 		DLL_EXPORT int encode(const char* filename, int quality = 50);
 
 		#pragma region getter
-		DLL_EXPORT inline int width(void) const;
-		DLL_EXPORT inline int height(void) const;
-		DLL_EXPORT inline int channel(void) const;
-		DLL_EXPORT inline uchar* data(void) const;
-		DLL_EXPORT inline int empty(void) const;
+		/**
+		* @fn
+		* @brief 行の長さを取得します。
+		*/
+		DLL_EXPORT inline int width(void) const noexcept;
+		/**
+		* @fn
+		* @brief 列の長さを取得します。
+		*/
+		DLL_EXPORT inline int height(void) const noexcept;
+		/**
+		* @fn
+		* @brief 画素数を取得します。
+		*/
+		DLL_EXPORT inline int channel(void) const noexcept;
+		/**
+		* @fn
+		* @brief 画像データを取得します。
+		*/
+		DLL_EXPORT inline uchar* data(void) const noexcept;
+		/**
+		* @fn
+		* @brief 画像データが空かどうかを取得します。
+		*/
+		DLL_EXPORT inline int empty(void) const noexcept;
 		#pragma endregion
 
 	};

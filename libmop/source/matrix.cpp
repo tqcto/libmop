@@ -237,19 +237,19 @@ namespace mop {
 
 	}
 
-	DLL_EXPORT inline int matrix::width(void) const {
+	DLL_EXPORT inline int matrix::width(void) const noexcept {
 		return this->bmp.width;
 	}
-	DLL_EXPORT inline int matrix::height(void) const {
+	DLL_EXPORT inline int matrix::height(void) const noexcept {
 		return this->bmp.height;
 	}
-	DLL_EXPORT inline int matrix::channel(void) const {
+	DLL_EXPORT inline int matrix::channel(void) const noexcept {
 		return this->bmp.ch;
 	}
-	DLL_EXPORT inline uchar* matrix::data(void) const {
+	DLL_EXPORT inline uchar* matrix::data(void) const noexcept {
 		return this->bmp.data;
 	}
-	DLL_EXPORT inline int matrix::empty(void) const {
+	DLL_EXPORT inline int matrix::empty(void) const noexcept {
 		return this->_empty;
 	}
 

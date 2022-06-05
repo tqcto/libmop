@@ -31,7 +31,7 @@ DLL_EXPORT int decodeJPG(BITMAPDATA_t* bmp, const char* filename) {
 	h = jpeg.output_height;
 	c = jpeg.out_color_components;
 
-	printf("width: %d, height: %d, channel: %d\n", w, h, c);
+	//printf("width: %d, height: %d, channel: %d\n", w, h, c);
 
 	bmp->data = (unsigned char*)malloc(sizeof(unsigned char) * w * h * c);
 	if (bmp->data == NULL) {
