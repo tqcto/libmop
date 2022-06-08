@@ -1,5 +1,4 @@
 #pragma once
-
 #include "deflate/define.h"
 
 DLL_EXPORT inline int repeat(int value, int max);

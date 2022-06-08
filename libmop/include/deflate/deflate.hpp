@@ -64,7 +64,7 @@ namespace mop {
 		RED = 0,
 		GREEN,
 		BLUE,
-		ALPHA
+		//ALPHA
 
 	};
 
@@ -166,6 +166,21 @@ namespace mop {
 	typedef _pixel<ushort> pixel16;
 	typedef _pixel<float> pixel32;
 	//*/
+
+	typedef struct rgb {
+
+		uchar r;
+		uchar g;
+		uchar b;
+
+	}rgb;
+	typedef struct hsv {
+
+		uchar h;
+		uchar s;
+		uchar v;
+
+	}hsv;
 
 	#pragma region libjpeg
 

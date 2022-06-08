@@ -7,6 +7,7 @@ extern "C" {
 #include "deflate/deflate.hpp"
 
 extern "C" {
+#include "xor_shift.h"
 #include "wrap.h"
 }
 
@@ -15,4 +16,5 @@ extern "C" {
 extern "C++" {
 #include "reader.hpp"
 #include "matrix.hpp"
+#include "effect.hpp"
 }

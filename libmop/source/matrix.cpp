@@ -231,6 +231,38 @@ namespace mop {
 
 	}
 
+	DLL_EXPORT void matrix::HSV(int h, int s, int v) {
+
+		rgb c1;
+		hsv c2;
+
+		int _h, _s, _v;
+
+		for (int y = 0; y < this->height(); y++) {
+			for (int x = 0; x < this->width(); x++) {
+
+				c1 = { *this->access(x, y, 0), *this->access(x, y, 1), *this->access(x, y, 2) };
+				c2 = rgb2hsv(c1);
+
+				_h = (int)c2.h + h;
+				_s = (int)c2.s + s;
+				_v = (int)c2.v + v;
+
+				c2.h = RANGE(0x00, 0xFF, _h);
+				c2.s = RANGE(0x00, 0xFF, _s);
+				c2.v = RANGE(0x00, 0xFF, _v);
+
+				c1 = hsv2rgb(c2);
+				
+				*this->access(x, y, 0) = c1.r;
+				*this->access(x, y, 1) = c1.g;
+				*this->access(x, y, 2) = c1.b;
+
+			}
+		}
+
+	}
+
 	DLL_EXPORT int matrix::encode(const char* filename, int quality) {
 
 		return encodeJPG(&this->bmp, filename, quality);
@@ -248,6 +280,9 @@ namespace mop {
 	}
 	DLL_EXPORT inline uchar* matrix::data(void) const noexcept {
 		return this->bmp.data;
+	}
+	DLL_EXPORT inline uchar* const* matrix::data_ptr(void) const noexcept {
+		return &this->bmp.data;
 	}
 	DLL_EXPORT inline int matrix::empty(void) const noexcept {
 		return this->_empty;

@@ -91,6 +91,17 @@ namespace mop {
 		DLL_EXPORT void Rotate(double angle, repeat_mode mode = repeat_none, int cx = 0, int cy = 0);
 		#pragma endregion
 
+		#pragma region color variation
+		/**
+		* @fn
+		* @brief 画像データをHSV色空間に変換して 色相、 彩度、 明度 を変更します。
+		* @param h 色相
+		* @param s 彩度
+		* @param v 明度
+		*/
+		DLL_EXPORT void HSV(int h, int s, int v);
+		#pragma endregion
+
 		/**
 		* @fn
 		* @brief 画像データを保存します。
@@ -121,6 +132,7 @@ namespace mop {
 		* @brief 画像データを取得します。
 		*/
 		DLL_EXPORT inline uchar* data(void) const noexcept;
+		DLL_EXPORT inline uchar* const* data_ptr(void) const noexcept;
 		/**
 		* @fn
 		* @brief 画像データが空かどうかを取得します。

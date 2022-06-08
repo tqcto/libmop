@@ -15,7 +15,9 @@ int main(void) {
     matrix dst(&src);
 
     //dst.Resize(0.5, 0.5);
-    dst.Rotate(20.0, repeat_mirror);
+    //dst.Rotate(20.0, repeat_mirror);
+    //Noise(&dst, 200);
+    dst.HSV(0, -50, 0);
     printf("w:%d, h:%d\n", dst.width(), dst.height());
 
     /*

@@ -16,6 +16,10 @@
 #define MAX(a, b)  ((a) < (b) ? (b) : (a))
 #endif
 
+#ifndef RANGE
+#define RANGE(min, max, value)	((value) < (min) ? (min) : (max) < (value) ? (max) : (value))
+#endif
+
 #ifndef DLL_EXPORT
 #define DLL_EXPORT __declspec(dllexport)
 #endif
