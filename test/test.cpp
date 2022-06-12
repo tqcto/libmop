@@ -12,13 +12,22 @@ using namespace mop;
 int main(void) {
 
     matrix src(BMP_FILE);
-    matrix dst(&src);
+    //matrix dst(&src);
+    matrix dst(src.width(), src.height(), src.channel());
+    dst.Memcpy(*src.data_ptr(), dst.width(), dst.height(), dst.channel());
 
     //dst.Resize(0.5, 0.5);
     //dst.Rotate(20.0, repeat_mirror);
     //Noise(&dst, 200);
     dst.HSV(0, -50, 0);
     printf("w:%d, h:%d\n", dst.width(), dst.height());
+
+    HWND hwnd = make_new_window();
+
+    view_data(hwnd, (void**)dst.data_ptr(), dst.width(), dst.height(), dst.channel());
+
+    UpdateWindow(hwnd);
+    printf("size:%d\n", sizeof(dst.data()));
 
     /*
     for (int y = 0; y < src.height(); y++) {

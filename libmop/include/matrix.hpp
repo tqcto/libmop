@@ -54,12 +54,13 @@ namespace mop {
 		* @param channels 色素数
 		* @return メモリが確保できた場合は0、できなかった場合は-1以下を返します。
 		*/
-		DLL_EXPORT int data_malloc(int width, int height, int channels);
+		DLL_EXPORT int Malloc(int width, int height, int channels);
 		/**
 		* @fn
 		* @brief 画像データのメモリを解放します。
 		*/
-		DLL_EXPORT void data_free(void);
+		DLL_EXPORT void Free(void);
+		DLL_EXPORT int Memcpy(uchar* data, int width, int height, int channels);
 		#pragma endregion
 
 		/**

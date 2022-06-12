@@ -35,23 +35,22 @@ DLL_EXPORT HWND make_new_window(WNDPROC proc) {
 
 }
 
-DLL_EXPORT void view_data(HWND hwnd, void** data, int width, int height, int channel, int bit) {
+DLL_EXPORT void view_data(HWND hwnd, void** data, int width, int height, int channel) {
 
 	RECT rec;
 	GetWindowRect(hwnd, &rec);
 
+	SetWindowPos(hwnd, hwnd, rec.left, rec.top, width, height, 0);
+
 	HDC hdc = GetDC(hwnd);
 
 	BITMAPINFO info;
-	info.bmiHeader.biBitCount = 8 * bit;//8 * bit * 3;//24;
+	info.bmiHeader.biBitCount = 24;
 	info.bmiHeader.biWidth = width;
 	info.bmiHeader.biHeight = -height;
 	info.bmiHeader.biPlanes = 1;
 	info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-
-	if (bit == 1) info.bmiHeader.biCompression = BI_RGB;
-	if (bit != 1) info.bmiHeader.biCompression = BI_BITFIELDS;
-
+	info.bmiHeader.biCompression = BI_RGB;
 	info.bmiHeader.biClrImportant = 0;
 	info.bmiHeader.biClrUsed = 0;
 	info.bmiHeader.biSizeImage = 0;
@@ -61,7 +60,7 @@ DLL_EXPORT void view_data(HWND hwnd, void** data, int width, int height, int cha
 	StretchDIBits(
 		hdc,
 		0, 0,
-		rec.right, rec.bottom,
+		width, height,
 		0, 0,
 		width, height,
 		*data,

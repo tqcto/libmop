@@ -1,6 +1,9 @@
 #pragma once
 #include "deflate/define.h"
 
+#ifndef INC_MOP_XOR_SHIFT_H
+#define INC_MOP_XOR_SHIFT_H
+
 #define XS_SRAND		init_xorShift
 #define XS_RAND			xorShift
 #define XS_RAND_MAX		0x7FFF
@@ -22,3 +25,5 @@
 DLL_EXPORT unsigned int xorShift(void);
 DLL_EXPORT double xorShiftDouble(void);
 DLL_EXPORT void init_xorShift(unsigned int s);
+
+#endif

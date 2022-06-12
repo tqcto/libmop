@@ -91,7 +91,7 @@ namespace mop {
 	typedef enum {
 
 		repeat_none,
-		repeat_normal,
+		repeat_tile,
 		repeat_mirror
 
 	}repeat_mode;

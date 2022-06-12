@@ -1,14 +1,14 @@
 #include "../include/wrap.h"
 
-DLL_EXPORT inline int repeat(int value, int max) {
+DLL_EXPORT inline int tile(int value, int max) {
 
 	if (max <= value) {
 		value -= max;
-		value = repeat(value, max);
+		value = tile(value, max);
 	}
 	else if (value < 0) {
 		value = max - value * -1;
-		value = repeat(value, max);
+		value = tile(value, max);
 	}
 
 	return value;

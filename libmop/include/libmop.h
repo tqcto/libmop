@@ -2,11 +2,6 @@
 
 extern "C" {
 #include "deflate/define.h"
-}
-
-#include "deflate/deflate.hpp"
-
-extern "C" {
 #include "xor_shift.h"
 #include "wrap.h"
 }
@@ -14,6 +9,7 @@ extern "C" {
 #include "winutil.h"
 
 extern "C++" {
+#include "deflate/deflate.hpp"
 #include "reader.hpp"
 #include "matrix.hpp"
 #include "effect.hpp"
