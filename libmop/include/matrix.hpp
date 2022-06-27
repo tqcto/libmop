@@ -72,6 +72,14 @@ namespace mop {
 		* @return 画素データのポインタを返します。
 		*/
 		DLL_EXPORT uchar* access(int x, int y, int c);
+		/**
+		* @fn
+		* @brief 指定した座標の画素データを取得します。
+		* @param x 行番号
+		* @param y 列番号
+		* @return 画素データのポインタを返します。
+		*/
+		DLL_EXPORT rgbp access(int x, int y);
 
 		#pragma region matrix op
 		/**

@@ -45,6 +45,9 @@
     <ClInclude Include="include\xor_shift.h">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="include\filter.hpp">
+      <Filter>Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\wrap.c">

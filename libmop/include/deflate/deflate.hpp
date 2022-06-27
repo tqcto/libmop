@@ -173,7 +173,32 @@ namespace mop {
 		uchar g;
 		uchar b;
 
+		rgb(void) {
+			r = 0, g = 0, b = 0;
+		}
+		rgb(uchar _r, uchar _g, uchar _b) {
+			r = _r;
+			g = _g;
+			b = _b;
+		}
+
 	}rgb;
+	typedef struct rgbp {
+
+		uchar* r;
+		uchar* g;
+		uchar* b;
+
+		rgbp(void) {
+
+		}
+		rgbp(uchar* _r, uchar* _g, uchar* _b) {
+			r = _r;
+			g = _g;
+			b = _b;
+		}
+
+	}rgbp;
 	typedef struct hsv {
 
 		uchar h;

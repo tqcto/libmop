@@ -104,7 +104,16 @@ namespace mop {
 
 	DLL_EXPORT uchar* matrix::access(int x, int y, int c) {
 
-		return &this->bmp.data[this->bmp.ch * (x + y * this->bmp.width) + c];
+		return &this->bmp.data[(x + y * this->bmp.width) * this->bmp.ch + c];
+
+	}
+	DLL_EXPORT rgbp matrix::access(int x, int y) {
+
+		return rgbp(
+			&this->bmp.data[(x + y * this->bmp.width) * this->bmp.ch],
+			&this->bmp.data[(x + y * this->bmp.width) * this->bmp.ch + 1],
+			&this->bmp.data[(x + y * this->bmp.width) * this->bmp.ch + 2]
+		);
 
 	}
 

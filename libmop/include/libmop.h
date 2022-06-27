@@ -13,4 +13,5 @@ extern "C++" {
 #include "reader.hpp"
 #include "matrix.hpp"
 #include "effect.hpp"
+#include "filter.hpp"
 }

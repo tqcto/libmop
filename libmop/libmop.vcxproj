@@ -38,6 +38,7 @@
     <ClInclude Include="include\deflate\define.h" />
     <ClInclude Include="include\deflate\deflate.hpp" />
     <ClInclude Include="include\effect.hpp" />
+    <ClInclude Include="include\filter.hpp" />
     <ClInclude Include="include\libmop.h" />
     <ClInclude Include="include\matrix.hpp" />
     <ClInclude Include="include\reader.hpp" />
