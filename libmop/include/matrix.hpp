@@ -92,6 +92,7 @@ namespace mop {
 		* @return 画素データのポインタを返します。
 		*/
 		DLL_EXPORT rgbp access(int x, int y);
+
 		/**
 		* @fn
 		* @brief 指定した座標の画素データのHSV値を取得します。
@@ -99,7 +100,15 @@ namespace mop {
 		* @param y 列番号
 		* @return 画素データのHSV値を返します。
 		*/
-		DLL_EXPORT hsv accessHSV(int x, int y);
+		DLL_EXPORT hsv getHSV(int x, int y);
+		/**
+		* @fn
+		* @brief 指定した座標の画素データのHSV値を変更します。
+		* @param x 行番号
+		* @param y 列番号
+		* @param c HSV値
+		*/
+		DLL_EXPORT void setHSV(int x, int y, hsv c);
 
 		#pragma region matrix op
 		/**

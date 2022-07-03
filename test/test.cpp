@@ -22,6 +22,15 @@ int main(void) {
     //dst.Rotate(20.0, repeat_mirror);
     //Noise(&dst, 200);
     dst.HSV(0, -50, 0);
+
+    for (int y = dst.height() / 2 - dst.height() / 4; y < dst.height() / 2 + dst.height() / 4; y++) {
+        for (int x = dst.width() / 2 - dst.width() / 4; x < dst.width() / 2 + dst.width() / 4; x++) {
+            hsv c = dst.getHSV(x, y);
+            c.h += 50;
+            dst.setHSV(x, y, c);
+        }
+    }
+
     printf("w:%d, h:%d\n", dst.width(), dst.height());
 
     HWND hwnd = make_new_window();

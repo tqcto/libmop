@@ -132,10 +132,19 @@ namespace mop {
 		);
 
 	}
-	DLL_EXPORT hsv matrix::accessHSV(int x, int y) {
+
+	DLL_EXPORT hsv matrix::getHSV(int x, int y) {
 
 		rgb c(access(x, y));
 		return rgb2hsv(c);
+
+	}
+	DLL_EXPORT void matrix::setHSV(int x, int y, hsv c) {
+
+		rgb d = hsv2rgb(c);
+		*(access(x, y).r) = d.r;
+		*(access(x, y).g) = d.g;
+		*(access(x, y).b) = d.b;
 
 	}
 
