@@ -64,7 +64,15 @@ namespace mop {
 		* @brief 画像データのメモリを解放します。
 		*/
 		DLL_EXPORT void Free(void);
-		DLL_EXPORT int Memcpy(uchar* data, int width, int height, int channels);
+		/**
+		* @fn
+		* @brief 画像データをコピーします。
+		* @param data コピーするデータ
+		* @param width 行数
+		* @param height 列数
+		* @param channels 色素数
+		*/
+		DLL_EXPORT void Memcpy(uchar* data, int width, int height, int channels);
 		#pragma endregion
 
 		/**
@@ -84,6 +92,14 @@ namespace mop {
 		* @return 画素データのポインタを返します。
 		*/
 		DLL_EXPORT rgbp access(int x, int y);
+		/**
+		* @fn
+		* @brief 指定した座標の画素データのHSV値を取得します。
+		* @param x 行番号
+		* @param y 列番号
+		* @return 画素データのHSV値を返します。
+		*/
+		DLL_EXPORT hsv accessHSV(int x, int y);
 
 		#pragma region matrix op
 		/**

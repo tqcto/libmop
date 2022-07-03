@@ -175,22 +175,6 @@ namespace mop {
 	typedef _pixel<float> pixel32;
 	//*/
 
-	typedef struct rgb {
-
-		uchar r;
-		uchar g;
-		uchar b;
-
-		rgb(void) {
-			r = 0, g = 0, b = 0;
-		}
-		rgb(uchar _r, uchar _g, uchar _b) {
-			r = _r;
-			g = _g;
-			b = _b;
-		}
-
-	}rgb;
 	typedef struct rgbp {
 
 		uchar* r;
@@ -207,6 +191,27 @@ namespace mop {
 		}
 
 	}rgbp;
+	typedef struct rgb {
+
+		uchar r;
+		uchar g;
+		uchar b;
+
+		rgb(void) {
+			r = 0, g = 0, b = 0;
+		}
+		rgb(uchar _r, uchar _g, uchar _b) {
+			r = _r;
+			g = _g;
+			b = _b;
+		}
+		rgb(rgbp p) {
+			r = *p.r;
+			g = *p.g;
+			b = *p.b;
+		}
+
+	}rgb;
 	typedef struct hsv {
 
 		uchar h;

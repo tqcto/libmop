@@ -88,13 +88,11 @@ namespace mop {
 		return 0;
 
 	}
-	DLL_EXPORT int matrix::Memcpy(uchar* data, int width, int height, int channels) {
+	DLL_EXPORT void matrix::Memcpy(uchar* data, int width, int height, int channels) {
 
 		int size = sizeof(uchar) * width * height * channels;
 		this->_data = (uchar*)malloc(size);
 		memcpy(_data, data, size);
-
-		return 0;
 
 	}
 	DLL_EXPORT void matrix::Free(void) {
@@ -132,6 +130,12 @@ namespace mop {
 			&this->_data[(x + y * this->_w) * this->_c + 1],
 			&this->_data[(x + y * this->_w) * this->_c + 2]
 		);
+
+	}
+	DLL_EXPORT hsv matrix::accessHSV(int x, int y) {
+
+		rgb c(access(x, y));
+		return rgb2hsv(c);
 
 	}
 
