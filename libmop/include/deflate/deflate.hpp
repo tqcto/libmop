@@ -8,6 +8,14 @@ namespace mop {
 	typedef unsigned short	ushort;
 	typedef unsigned int	uint;
 
+	#pragma region function define
+	
+	DLL_EXPORT int struct_malloc(void** ptr, int size);
+	DLL_EXPORT void struct_cpy(void** src, void** dst, int size);
+	DLL_EXPORT void struct_free(void** ptr);
+
+	#pragma endregion
+
 	#pragma region vector define
 
 	template <typename T>
@@ -55,7 +63,7 @@ namespace mop {
 	typedef _vector3<float> vector3f;
 	typedef _vector3<double> vector3d;
 
-#pragma endregion
+	#pragma endregion
 
 	#pragma region pixel define
 
@@ -221,6 +229,26 @@ namespace mop {
 			width	= 0;
 			height	= 0;
 			ch		= 0;
+		}
+		bmp_t(uchar* _data, uint w, uint h, uint c) {
+			//data = _data;
+			
+			int size = sizeof(uchar) * w * h * c;
+			struct_malloc((void**)&data, size);
+			struct_cpy((void**)&_data, (void**)&data, size);
+
+			width = w;
+			height = h;
+			ch = c;
+		}
+		~bmp_t(void) {
+
+			//if (data) struct_free((void**)&data);
+			
+			width	= 0;
+			height	= 0;
+			ch		= 0;
+
 		}
 
 	}BITMAPDATA_t;

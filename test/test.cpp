@@ -16,6 +16,8 @@ int main(void) {
     matrix dst(src.width(), src.height(), src.channel());
     dst.Memcpy(*src.data_ptr(), dst.width(), dst.height(), dst.channel());
 
+    src.Free();
+
     //dst.Resize(0.5, 0.5);
     //dst.Rotate(20.0, repeat_mirror);
     //Noise(&dst, 200);
@@ -27,7 +29,6 @@ int main(void) {
     view_data(hwnd, (void**)dst.data_ptr(), dst.width(), dst.height(), dst.channel());
 
     UpdateWindow(hwnd);
-    printf("size:%d\n", sizeof(dst.data()));
 
     /*
     for (int y = 0; y < src.height(); y++) {
@@ -42,6 +43,9 @@ int main(void) {
     */
 
     dst.encode(ENCODE_F);
+
+    dst.Free();
+    //free((uchar*)dst.data_ptr());
 
     return 0;
 

@@ -13,14 +13,18 @@ namespace mop {
 
 	DLL_EXPORT matrix::matrix(const char* filename) {
 
-		if (decodeJPG(&this->bmp, filename)) {
-
-			this->bmp		= BITMAPDATA_t();
+		BITMAPDATA_t bmp;
+		if (decodeJPG(&bmp, filename)) {
 			this->_empty	= true;
-
 			return;
-
 		}
+
+		this->_w = bmp.width;
+		this->_h = bmp.height;
+		this->_c = bmp.ch;
+
+		Memcpy(bmp.data, bmp.width, bmp.height, bmp.ch);
+		free(bmp.data);
 
 		this->_empty = false;
 
@@ -38,11 +42,11 @@ namespace mop {
 
 		if (Malloc(w, h, c)) return;
 
-		this->bmp.width		= w;
-		this->bmp.height	= h;
-		this->bmp.ch		= c;
+		this->_w = w;
+		this->_h = h;
+		this->_c = c;
 
-		memcpy(this->bmp.data, src->data(), w * h * c);
+		memcpy(this->_data, src->data(), w * h * c);
 
 	}
 	DLL_EXPORT matrix::matrix(int width, int height, int channels) {
@@ -54,15 +58,15 @@ namespace mop {
 
 		if (Malloc(width, height, channels)) return;
 
-		this->bmp.width		= width;
-		this->bmp.height	= height;
-		this->bmp.ch		= channels;
+		this->_w = width;
+		this->_h = height;
+		this->_c = channels;
 
 	}
 
 	DLL_EXPORT matrix::~matrix(void) {
 
-		Free();
+		//Free();
 
 	}
 
@@ -72,8 +76,8 @@ namespace mop {
 			Free();
 		}
 
-		this->bmp.data = (uchar*)malloc(sizeof(uchar) * width * height * channels);
-		if (this->bmp.data == NULL) {
+		this->_data = (uchar*)malloc(sizeof(uchar) * width * height * channels);
+		if (this->_data == NULL) {
 			this->_empty = true;
 			printf("data malloc error.\n");
 			return -1;
@@ -86,52 +90,66 @@ namespace mop {
 	}
 	DLL_EXPORT int matrix::Memcpy(uchar* data, int width, int height, int channels) {
 
-		freeBMP(&this->bmp);
-
 		int size = sizeof(uchar) * width * height * channels;
-		this->bmp.data = (uchar*)malloc(size);
-		memcpy(this->bmp.data, data, size);
+		this->_data = (uchar*)malloc(size);
+		memcpy(_data, data, size);
 
 		return 0;
 
 	}
 	DLL_EXPORT void matrix::Free(void) {
 
-		freeBMP(&this->bmp);
+		//printf("freeing : ");
+		if (this->_data != NULL) {
+			try {
+				free(this->_data);
+			}
+			catch (...) {
+				while (1) {
+					this->_data = (uchar*)malloc(sizeof(uchar));
+					free(this->_data);
+				}
+			}
+		}
+
+		this->_w = 0;
+		this->_h = 0;
+		this->_c = 0;
 		this->_empty = true;
+		//printf("freeed\n");
 
 	}
 
 	DLL_EXPORT uchar* matrix::access(int x, int y, int c) {
 
-		return &this->bmp.data[(x + y * this->bmp.width) * this->bmp.ch + c];
+		return &this->_data[(x + y * this->_w) * this->_c + c];
 
 	}
 	DLL_EXPORT rgbp matrix::access(int x, int y) {
 
 		return rgbp(
-			&this->bmp.data[(x + y * this->bmp.width) * this->bmp.ch],
-			&this->bmp.data[(x + y * this->bmp.width) * this->bmp.ch + 1],
-			&this->bmp.data[(x + y * this->bmp.width) * this->bmp.ch + 2]
+			&this->_data[(x + y * this->_w) * this->_c],
+			&this->_data[(x + y * this->_w) * this->_c + 1],
+			&this->_data[(x + y * this->_w) * this->_c + 2]
 		);
 
 	}
 
 	DLL_EXPORT void matrix::Resize(double size_w, double size_h) {
 
-		int w = this->bmp.width,
-			h = this->bmp.height;
+		int w = this->_w,
+			h = this->_h;
 
 		int aw = (double)w * size_w,
 			ah = (double)h * size_h;
 
-		uchar* src = (uchar*)malloc(sizeof(uchar) * w * h * this->bmp.ch);
-		memcpy(src, this->bmp.data, w * h * this->bmp.ch);
+		uchar* src = (uchar*)malloc(sizeof(uchar) * w * h * this->_c);
+		memcpy(src, this->_data, w * h * this->_c);
 
-		this->bmp.width		= aw;
-		this->bmp.height	= ah;
-		free(this->bmp.data);
-		this->bmp.data = (uchar*)malloc(sizeof(uchar) * aw * ah * this->bmp.ch);
+		this->_w = aw;
+		this->_h = ah;
+		free(this->_data);
+		this->_data = (uchar*)malloc(sizeof(uchar) * aw * ah * this->_c);
 
 		double	ow, oh;
 		int		x0, x1, y0, y1, dx, dy;
@@ -151,14 +169,14 @@ namespace mop {
 
 				dx = ow - x0;
 
-				for (int c = 0; c < this->bmp.ch; c++) {
+				for (int c = 0; c < this->_c; c++) {
 
 					if (x < aw && y < ah) {
 						*access(x, y, c) =
-								src[this->bmp.ch * (x1 + y1 * w) + c] * dx * dy
-							+	src[this->bmp.ch * (x1 + y0 * w) + c] * dx * (1 - dy)
-							+	src[this->bmp.ch * (x0 + y1 * w) + c] * (1 - dx) * dy
-							+	src[this->bmp.ch * (x0 + y0 * w) + c] * (1 - dx) * (1 - dy);
+								src[this->_c * (x1 + y1 * w) + c] * dx * dy
+							+	src[this->_c * (x1 + y0 * w) + c] * dx * (1 - dy)
+							+	src[this->_c * (x0 + y1 * w) + c] * (1 - dx) * dy
+							+	src[this->_c * (x0 + y0 * w) + c] * (1 - dx) * (1 - dy);
 					}
 
 				}
@@ -170,8 +188,8 @@ namespace mop {
 	}
 	DLL_EXPORT void matrix::Rotate(double angle, repeat_mode mode, int cx, int cy) {
 
-		int w = this->bmp.width,
-			h = this->bmp.height;
+		int w = this->_w,
+			h = this->_h;
 
 		int hw = round((double)w / 2.0),
 			hh = round((double)h / 2.0);
@@ -197,11 +215,11 @@ namespace mop {
 		int aw = abs(min_x) + max_x,
 			ah = abs(min_y) + max_y;
 
-		uchar* src = (uchar*)malloc(sizeof(uchar) * w * h * this->bmp.ch);
-		memcpy(src, this->bmp.data, w * h * this->bmp.ch);
+		uchar* src = (uchar*)malloc(sizeof(uchar) * w * h * this->_c);
+		memcpy(src, this->_data, w * h * this->_c);
 
-		free(this->bmp.data);
-		this->bmp.data = (uchar*)malloc(sizeof(uchar) * w * h * this->bmp.ch);
+		free(this->_data);
+		this->_data = (uchar*)malloc(sizeof(uchar) * w * h * this->_c);
 		//this->bmp.data = (uchar*)malloc(sizeof(uchar) * aw * ah * this->bmp.ch);
 		//this->bmp.width		= aw;
 		//this->bmp.height	= ah;
@@ -218,12 +236,12 @@ namespace mop {
 				switch (mode) {
 				case repeat_mode::repeat_none:
 					if (0 <= x0 && x0 < w && 0 <= y0 && y0 < h) {
-						for (int c = 0; c < this->bmp.ch; c++) {
-							*access(x, y, c) = src[this->bmp.ch * (x0 + y0 * w) + c];
+						for (int c = 0; c < this->_c; c++) {
+							*access(x, y, c) = src[this->_c * (x0 + y0 * w) + c];
 						}
 					}
 					else {
-						for (int c = 0; c < this->bmp.ch; c++) {
+						for (int c = 0; c < this->_c; c++) {
 							*access(x, y, c) = 0x00;
 						}
 					}
@@ -231,15 +249,15 @@ namespace mop {
 				case repeat_mode::repeat_tile:
 					x0 = tile(x0, w - 1);
 					y0 = tile(y0, h - 1);
-					for (int c = 0; c < this->bmp.ch; c++) {
-						*access(x, y, c) = src[this->bmp.ch * (x0 + y0 * w) + c];
+					for (int c = 0; c < this->_c; c++) {
+						*access(x, y, c) = src[this->_c * (x0 + y0 * w) + c];
 					}
 					break;
 				case repeat_mode::repeat_mirror:
 					x0 = mirror(x0, w - 1);
 					y0 = mirror(y0, h - 1);
-					for (int c = 0; c < this->bmp.ch; c++) {
-						*access(x, y, c) = src[this->bmp.ch * (x0 + y0 * w) + c];
+					for (int c = 0; c < this->_c; c++) {
+						*access(x, y, c) = src[this->_c * (x0 + y0 * w) + c];
 					}
 					break;
 				}				
@@ -285,24 +303,27 @@ namespace mop {
 
 	DLL_EXPORT int matrix::encode(const char* filename, int quality) {
 
-		return encodeJPG(&this->bmp, filename, quality);
+		BITMAPDATA_t bmp(this->_data, this->_w, this->_h, this->_c);
+		int ret = encodeJPG(&bmp, filename, quality);
+		freeBMP(&bmp);
+		return ret;
 
 	}
 
 	DLL_EXPORT inline int matrix::width(void) const noexcept {
-		return this->bmp.width;
+		return this->_w;
 	}
 	DLL_EXPORT inline int matrix::height(void) const noexcept {
-		return this->bmp.height;
+		return this->_h;
 	}
 	DLL_EXPORT inline int matrix::channel(void) const noexcept {
-		return this->bmp.ch;
+		return this->_c;
 	}
 	DLL_EXPORT inline uchar* matrix::data(void) const noexcept {
-		return this->bmp.data;
+		return this->_data;
 	}
 	DLL_EXPORT inline uchar* const* matrix::data_ptr(void) const noexcept {
-		return &this->bmp.data;
+		return &this->_data;
 	}
 	DLL_EXPORT inline int matrix::empty(void) const noexcept {
 		return this->_empty;

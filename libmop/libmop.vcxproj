@@ -47,6 +47,7 @@
     <ClInclude Include="include\xor_shift.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\deflate\deflate.cpp" />
     <ClCompile Include="source\effect.cpp" />
     <ClCompile Include="source\matrix.cpp" />
     <ClCompile Include="source\reader.cpp" />

@@ -16,6 +16,9 @@
     <Filter Include="Header\deflate">
       <UniqueIdentifier>{f5ad9e08-1b7a-4300-aa41-5042a0d732bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\deflate">
+      <UniqueIdentifier>{ecda42f8-92da-4df5-ab3e-3e5275e6db79}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\libmop.h">
@@ -67,6 +70,9 @@
     </ClCompile>
     <ClCompile Include="source\xor_shift.c">
       <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\deflate\deflate.cpp">
+      <Filter>Source\deflate</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

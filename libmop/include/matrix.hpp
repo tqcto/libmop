@@ -8,7 +8,11 @@ namespace mop {
 
 	private:
 
-		BITMAPDATA_t	bmp;
+		//BITMAPDATA_t	bmp;
+		uchar*			_data = nullptr;
+		uint			_w;
+		uint			_h;
+		uint			_c;
 		bool			_empty;
 
 	public:

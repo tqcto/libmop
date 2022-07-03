@@ -19,6 +19,7 @@ DLL_EXPORT int decodeJPG(BITMAPDATA_t* bmp, const char* filename) {
 	file = fopen(filename, "rb");
 	if (file == NULL) {
 		printf("can't open fiile : %s\n", filename);
+		fclose(file);
 		return -1;
 	}
 
@@ -76,6 +77,7 @@ DLL_EXPORT int encodeJPG(BITMAPDATA_t* bmp, const char* filename, int quality) {
 	if (file == NULL) {
 		printf("can't open file : %s\n", filename);
 		jpeg_destroy_compress(&jpeg);
+		fclose(file);
 		return -1;
 	}
 
@@ -103,11 +105,19 @@ DLL_EXPORT int encodeJPG(BITMAPDATA_t* bmp, const char* filename, int quality) {
 	jpeg_finish_compress(&jpeg);
 	jpeg_destroy_compress(&jpeg);
 
+	fclose(file);
+
 	return 0;
 
 }
 
 DLL_EXPORT int freeBMP(BITMAPDATA_t* bmp) {
-	free(bmp->data);
+
+	if (bmp->data != NULL) free(bmp->data);
+
+	bmp->width	= 0;
+	bmp->height	= 0;
+	bmp->ch		= 0;
+
 	return 0;
 }
