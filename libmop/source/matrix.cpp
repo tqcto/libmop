@@ -15,6 +15,7 @@ namespace mop {
 
 		BITMAPDATA_t bmp;
 		if (decodeJPG(&bmp, filename)) {
+			printf("jpeg is empty.\n");
 			this->_empty	= true;
 			return;
 		}
@@ -23,7 +24,12 @@ namespace mop {
 		this->_h = bmp.height;
 		this->_c = bmp.ch;
 
-		Memcpy(bmp.data, bmp.width, bmp.height, bmp.ch);
+		int size = sizeof(uchar) * bmp.width * bmp.height * bmp.ch;
+
+		if (this->data) free(this->data);
+		this->data = (uchar*)malloc(size);
+
+		memcpy(this->data, bmp.data, size);
 		free(bmp.data);
 
 		this->_empty = false;
@@ -46,7 +52,7 @@ namespace mop {
 		this->_h = h;
 		this->_c = c;
 
-		memcpy(this->_data, src->data(), w * h * c);
+		memcpy(this->data, src->data, sizeof(uchar) * w * h * c);
 
 	}
 	DLL_EXPORT matrix::matrix(int width, int height, int channels) {
@@ -76,8 +82,8 @@ namespace mop {
 			Free();
 		}
 
-		this->_data = (uchar*)malloc(sizeof(uchar) * width * height * channels);
-		if (this->_data == NULL) {
+		this->data = (uchar*)malloc(sizeof(uchar) * width * height * channels);
+		if (this->data == NULL) {
 			this->_empty = true;
 			printf("data malloc error.\n");
 			return -1;
@@ -91,21 +97,24 @@ namespace mop {
 	DLL_EXPORT void matrix::Memcpy(uchar* data, int width, int height, int channels) {
 
 		int size = sizeof(uchar) * width * height * channels;
-		this->_data = (uchar*)malloc(size);
-		memcpy(_data, data, size);
+
+		if (!this->_empty) Free();
+
+		this->data = (uchar*)malloc(size);
+		memcpy(data, data, size);
 
 	}
 	DLL_EXPORT void matrix::Free(void) {
 
 		//printf("freeing : ");
-		if (this->_data != NULL) {
+		if (this->data != NULL) {
 			try {
-				free(this->_data);
+				free(this->data);
 			}
 			catch (...) {
 				while (1) {
-					this->_data = (uchar*)malloc(sizeof(uchar));
-					free(this->_data);
+					this->data = (uchar*)malloc(sizeof(uchar));
+					free(this->data);
 				}
 			}
 		}
@@ -120,15 +129,15 @@ namespace mop {
 
 	DLL_EXPORT uchar* matrix::access(int x, int y, int c) {
 
-		return &this->_data[(x + y * this->_w) * this->_c + c];
+		return &this->data[(x + y * this->_w) * this->_c + c];
 
 	}
 	DLL_EXPORT rgbp matrix::access(int x, int y) {
 
 		return rgbp(
-			&this->_data[(x + y * this->_w) * this->_c],
-			&this->_data[(x + y * this->_w) * this->_c + 1],
-			&this->_data[(x + y * this->_w) * this->_c + 2]
+			&this->data[(x + y * this->_w) * this->_c],
+			&this->data[(x + y * this->_w) * this->_c + 1],
+			&this->data[(x + y * this->_w) * this->_c + 2]
 		);
 
 	}
@@ -157,12 +166,12 @@ namespace mop {
 			ah = (double)h * size_h;
 
 		uchar* src = (uchar*)malloc(sizeof(uchar) * w * h * this->_c);
-		memcpy(src, this->_data, w * h * this->_c);
+		memcpy(src, this->data, w * h * this->_c);
 
 		this->_w = aw;
 		this->_h = ah;
-		free(this->_data);
-		this->_data = (uchar*)malloc(sizeof(uchar) * aw * ah * this->_c);
+		free(this->data);
+		this->data = (uchar*)malloc(sizeof(uchar) * aw * ah * this->_c);
 
 		double	ow, oh;
 		int		x0, x1, y0, y1, dx, dy;
@@ -229,10 +238,10 @@ namespace mop {
 			ah = abs(min_y) + max_y;
 
 		uchar* src = (uchar*)malloc(sizeof(uchar) * w * h * this->_c);
-		memcpy(src, this->_data, w * h * this->_c);
+		memcpy(src, this->data, w * h * this->_c);
 
-		free(this->_data);
-		this->_data = (uchar*)malloc(sizeof(uchar) * w * h * this->_c);
+		free(this->data);
+		this->data = (uchar*)malloc(sizeof(uchar) * w * h * this->_c);
 		//this->bmp.data = (uchar*)malloc(sizeof(uchar) * aw * ah * this->bmp.ch);
 		//this->bmp.width		= aw;
 		//this->bmp.height	= ah;
@@ -316,7 +325,7 @@ namespace mop {
 
 	DLL_EXPORT int matrix::encode(const char* filename, int quality) {
 
-		BITMAPDATA_t bmp(this->_data, this->_w, this->_h, this->_c);
+		BITMAPDATA_t bmp(this->data, this->_w, this->_h, this->_c);
 		int ret = encodeJPG(&bmp, filename, quality);
 		freeBMP(&bmp);
 		return ret;
@@ -332,11 +341,11 @@ namespace mop {
 	DLL_EXPORT inline int matrix::channel(void) const noexcept {
 		return this->_c;
 	}
-	DLL_EXPORT inline uchar* matrix::data(void) const noexcept {
-		return this->_data;
+	DLL_EXPORT inline uchar* matrix::data_(void) const noexcept {
+		return this->data;
 	}
 	DLL_EXPORT inline uchar* const* matrix::data_ptr(void) const noexcept {
-		return &this->_data;
+		return &this->data;
 	}
 	DLL_EXPORT inline int matrix::empty(void) const noexcept {
 		return this->_empty;

@@ -9,11 +9,21 @@ namespace mop {
 	private:
 
 		//BITMAPDATA_t	bmp;
-		uchar*			_data = nullptr;
-		uint			_w;
-		uint			_h;
-		uint			_c;
-		bool			_empty;
+		//uchar*			_data = nullptr;
+
+		//  横幅
+		uint _w;
+		// 縦幅
+		uint _h;
+		// 色素数
+		uint _c;
+		// 空のとき真
+		bool _empty;
+
+	public:
+
+		// 画像データ
+		uchar* data = nullptr;
 
 	public:
 
@@ -169,7 +179,7 @@ namespace mop {
 		* @fn
 		* @brief 画像データを取得します。
 		*/
-		DLL_EXPORT inline uchar* data(void) const noexcept;
+		DLL_EXPORT inline uchar* data_(void) const noexcept;
 		DLL_EXPORT inline uchar* const* data_ptr(void) const noexcept;
 		/**
 		* @fn

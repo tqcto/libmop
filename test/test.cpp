@@ -2,59 +2,38 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "libmop.h"
+#include "libmop_cuda.h"
 
 #define BMP_FILE "F:\\SS\\画像171.jpg"
 #define ENCODE_F "F:\\SS\\encode171.jpg"
 
 using namespace mop;
+using namespace mop_cuda;
+
+int f[3][3] = {
+    { -1, 0, 1 },
+    { -1, 0, 1 },
+    { -1, 0, 1 }
+};
+
+rgb vcf(rgb c) {
+    return { rgb2hsv(c).v, rgb2hsv(c).v, rgb2hsv(c).v };
+}
 
 int main(void) {
 
     matrix src(BMP_FILE);
-    //matrix dst(&src);
-    matrix dst(src.width(), src.height(), src.channel());
-    dst.Memcpy(*src.data_ptr(), dst.width(), dst.height(), dst.channel());
+    matrix dst(&src);
 
-    src.Free();
-
-    //dst.Resize(0.5, 0.5);
-    //dst.Rotate(20.0, repeat_mirror);
-    //Noise(&dst, 200);
-    dst.HSV(0, -50, 0);
-
-    for (int y = dst.height() / 2 - dst.height() / 4; y < dst.height() / 2 + dst.height() / 4; y++) {
-        for (int x = dst.width() / 2 - dst.width() / 4; x < dst.width() / 2 + dst.width() / 4; x++) {
-            hsv c = dst.getHSV(x, y);
-            c.h += 50;
-            dst.setHSV(x, y, c);
-        }
-    }
-
-    printf("w:%d, h:%d\n", dst.width(), dst.height());
-
-    HWND hwnd = make_new_window();
-
-    view_data(hwnd, (void**)dst.data_ptr(), dst.width(), dst.height(), dst.channel());
-
-    UpdateWindow(hwnd);
-
-    /*
-    for (int y = 0; y < src.height(); y++) {
-        for (int x = 0; x < src.width(); x++) {
-            for (int c = 0; c < src.channel(); c++) {
-
-                *dst.ac(x, y, c) = 0xFF;//*src.ac(x, y, src.channel() - c);
-
-            }
-        }
-    }
-    */
+    Filter<int, 3>(&src, &dst, f, vcf);
+    Noise(&dst, 100);
 
     dst.encode(ENCODE_F);
 
+    src.Free();
     dst.Free();
-    //free((uchar*)dst.data_ptr());
 
     return 0;
 

@@ -8,7 +8,7 @@ namespace mop {
 	template <typename T, int M>
 	void Filter(matrix* src, matrix* dst, T filter_kernel[M][M], FilterValue func) {
 
-		int m, n;
+		int m = 0, n = 0;
 		if ((M * 5) % 10 != 0) {
 			m = M / 2;
 			n = m;
@@ -29,11 +29,11 @@ namespace mop {
 
 							rgb c = { *src->access(xx, yy, 0), *src->access(xx, yy, 1), *src->access(xx, yy, 2) };
 							rgb f = func(c);
-							int ck = filter_kernel[yy - y - 1][xx - x - 1];
+							T ck = filter_kernel[yy - y - 1][xx - x - 1];
 
-							r += f.r * ck;
-							g += f.g * ck;
-							b += f.b * ck;
+							r += (T)(f.r) * ck;
+							g += (T)(f.g) * ck;
+							b += (T)(f.b) * ck;
 
 						}
 					}

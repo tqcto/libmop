@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{1adfd0cc-df1a-49ac-9bea-81b84e2f7f08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header">
+      <UniqueIdentifier>{8cad4d0d-cd9e-42d4-b933-c36e0fa58a67}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="source\kernel.cu">
+      <Filter>Source</Filter>
+    </CudaCompile>
+    <CudaCompile Include="source\effect.cu">
+      <Filter>Source</Filter>
+    </CudaCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\libmop_cuda.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="include\effect.cuh">
+      <Filter>Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
