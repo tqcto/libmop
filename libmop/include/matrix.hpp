@@ -12,13 +12,13 @@ namespace mop {
 		//uchar*			_data = nullptr;
 
 		//  横幅
-		uint _w;
+		uint _w = 0;
 		// 縦幅
-		uint _h;
+		uint _h = 0;
 		// 色素数
-		uint _c;
+		uint _c = 0;
 		// 空のとき真
-		bool _empty;
+		bool _empty = 0;
 
 	public:
 
@@ -186,6 +186,10 @@ namespace mop {
 		* @brief 画像データが空かどうかを取得します。
 		*/
 		DLL_EXPORT inline int empty(void) const noexcept;
+		#pragma endregion
+
+		#pragma region operator
+		DLL_EXPORT matrix& operator = (const matrix& src);
 		#pragma endregion
 
 	};

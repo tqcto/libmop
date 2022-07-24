@@ -8,6 +8,12 @@
 #define _USE_MATH_DEFINES
 #endif
 
+#ifdef MOP_LOG_SHOW
+#define DEBUG_LOG(A)	printf(A)
+#else
+#define DEBUG_LOG(...)
+#endif
+
 #ifndef MIN
 #define MIN(a, b)  ((a) > (b) ? (b) : (a))
 #endif

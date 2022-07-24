@@ -18,7 +18,7 @@ DLL_EXPORT int decodeJPG(BITMAPDATA_t* bmp, const char* filename) {
 
 	file = fopen(filename, "rb");
 	if (file == NULL) {
-		printf("can't open fiile : %s\n", filename);
+		DEBUG_LOG("can't open fiile : %s\n", filename);
 		fclose(file);
 		return -1;
 	}
@@ -36,7 +36,7 @@ DLL_EXPORT int decodeJPG(BITMAPDATA_t* bmp, const char* filename) {
 
 	bmp->data = (unsigned char*)malloc(sizeof(unsigned char) * w * h * c);
 	if (bmp->data == NULL) {
-		printf("data malloc error\n");
+		DEBUG_LOG("data malloc error\n");
 		fclose(file);
 		jpeg_destroy_decompress(&jpeg);
 		return -2;
@@ -75,7 +75,7 @@ DLL_EXPORT int encodeJPG(BITMAPDATA_t* bmp, const char* filename, int quality) {
 
 	file = fopen(filename, "wb");
 	if (file == NULL) {
-		printf("can't open file : %s\n", filename);
+		DEBUG_LOG("can't open file : %s\n", filename);
 		jpeg_destroy_compress(&jpeg);
 		fclose(file);
 		return -1;

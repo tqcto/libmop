@@ -15,7 +15,7 @@ namespace mop {
 
 		BITMAPDATA_t bmp;
 		if (decodeJPG(&bmp, filename)) {
-			printf("jpeg is empty.\n");
+			DEBUG_LOG("jpeg is empty.\n");
 			this->_empty	= true;
 			return;
 		}
@@ -78,17 +78,22 @@ namespace mop {
 
 	DLL_EXPORT int matrix::Malloc(int width, int height, int channels) {
 
-		if (!this->_empty) {
+		if (!(this->_empty)) {
 			Free();
 		}
+
+		if (width <= 0 || height <= 0 || channels <= 0) return -1;
 
 		this->data = (uchar*)malloc(sizeof(uchar) * width * height * channels);
 		if (this->data == NULL) {
 			this->_empty = true;
-			printf("data malloc error.\n");
-			return -1;
+			DEBUG_LOG("data malloc error.\n");
+			return -2;
 		}
 
+		this->_w = width;
+		this->_h = height;
+		this->_c = channels;
 		this->_empty = false;
 
 		return 0;
@@ -98,16 +103,16 @@ namespace mop {
 
 		int size = sizeof(uchar) * width * height * channels;
 
-		if (!this->_empty) Free();
-
-		this->data = (uchar*)malloc(size);
+		Malloc(width, height, channels);
+		//this->data = (uchar*)malloc(size);
 		memcpy(data, data, size);
 
 	}
 	DLL_EXPORT void matrix::Free(void) {
 
-		//printf("freeing : ");
-		if (this->data != NULL) {
+		DEBUG_LOG("freeing : ");
+		if (this->data != nullptr) {
+			/*
 			try {
 				free(this->data);
 			}
@@ -117,13 +122,18 @@ namespace mop {
 					free(this->data);
 				}
 			}
+			*/
+			DEBUG_LOG("want free data ptr address : %p\n", this->data);
+			free(this->data);
+			this->data = nullptr;
+			DEBUG_LOG("freed ptr address : %p\n", this->data);
 		}
 
 		this->_w = 0;
 		this->_h = 0;
 		this->_c = 0;
 		this->_empty = true;
-		//printf("freeed\n");
+		DEBUG_LOG("freeed\n");
 
 	}
 
@@ -349,6 +359,19 @@ namespace mop {
 	}
 	DLL_EXPORT inline int matrix::empty(void) const noexcept {
 		return this->_empty;
+	}
+
+	DLL_EXPORT matrix& matrix::operator = (const matrix& src) {
+
+		if (this != &src) {
+
+			this->Free();
+			this->Memcpy(src.data, src._w, src._h, src._c);
+
+		}
+
+		return *this;
+
 	}
 
 }

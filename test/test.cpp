@@ -2,15 +2,67 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
+
+#include <iostream>
 
 #include "libmop.h"
 #include "libmop_cuda.h"
 
+#define MOP_LOG_SHOW
+
 #define BMP_FILE "F:\\SS\\画像171.jpg"
+//#define BMP_FILE "F:\\映像素材\\sketches\\wood.jpg"
 #define ENCODE_F "F:\\SS\\encode171.jpg"
 
 using namespace mop;
 using namespace mop_cuda;
+
+template <int M>
+void Average(matrix* src, matrix* dst, FilterValue func) {
+
+    int m = 0, n = 0;
+    if ((M * 5) % 10 != 0) {
+        m = M / 2;
+        n = m;
+    }
+    else {
+        m = (double)M / 2.0;
+        n = m - 1;
+    }
+
+    for (int y = 0; y < src->height(); y++) {
+        for (int x = 0; x < src->width(); x++) {
+
+            int r = 0, g = 0, b = 0;
+
+            for (int yy = y - m; yy <= y + n; yy++) {
+                for (int xx = x - m; xx <= x + n; xx++) {
+                    if (0 <= xx && xx < src->width() && 0 <= yy && yy < src->height()) {
+
+                        rgb c = { *src->access(xx, yy, 0), *src->access(xx, yy, 1), *src->access(xx, yy, 2) };
+                        rgb f = func(c);
+
+                        r += f.r;
+                        g += f.g;
+                        b += f.b;
+
+                    }
+                }
+            }
+
+            r /= m * n;
+            g /= m * n;
+            b /= m * n;
+
+            *dst->access(x, y, 0) = r;
+            *dst->access(x, y, 1) = g;
+            *dst->access(x, y, 2) = b;
+
+        }
+    }
+
+}
 
 int f[3][3] = {
     { -1, 0, 1 },
@@ -18,22 +70,50 @@ int f[3][3] = {
     { -1, 0, 1 }
 };
 
+rgb fvc(rgb c) {
+    return c;
+}
 rgb vcf(rgb c) {
     return { rgb2hsv(c).v, rgb2hsv(c).v, rgb2hsv(c).v };
 }
 
 int main(void) {
 
-    matrix src(BMP_FILE);
-    matrix dst(&src);
+    #ifndef TEST_CUDA
 
-    Filter<int, 3>(&src, &dst, f, vcf);
-    Noise(&dst, 100);
+    double start, cpu_duration, gpu_duration;
+
+    matrix src(BMP_FILE);
+    matrix dst;// = src;
+    //matrix dst(&src);
+
+    dst = src;
+
+    printf("src data ptr : %p\n", src.data);
+    printf("dst data ptr : %p\n", dst.data);
+
+    Average<3>(&src, &dst, fvc);
+    //Filter<int, 3>(&src, &dst, f, vcf);
+    start = clock();
+    mop::Noise(&src, &dst, 100);
+    cpu_duration = (double)(clock() - start) / CLOCKS_PER_SEC;
+
+    start = clock();
+    mop_cuda::Blur(&src, &dst, 30);
+    gpu_duration = (double)(clock() - start) / CLOCKS_PER_SEC;
+    std::cout << "cpu duration　= " << cpu_duration << "sec.\n";
+    std::cout << "gpu duration　= " << gpu_duration << "sec.\n";
 
     dst.encode(ENCODE_F);
 
     src.Free();
     dst.Free();
+
+    #else
+
+    Test();
+
+    #endif
 
     return 0;
 

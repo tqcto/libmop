@@ -10,7 +10,7 @@ namespace mop {
 	* @param percent 付加度
 	* @param seed ランダムシード値
 	*/
-	DLL_EXPORT void Noise(matrix* src, int percent, int seed = 0);
+	DLL_EXPORT void Noise(matrix* src, matrix* dst, int percent, int seed = 0);
 
 	/**
 	* @fn

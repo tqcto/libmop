@@ -4,7 +4,7 @@
 
 namespace mop {
 
-	DLL_EXPORT void Noise(matrix* src, int percent, int seed) {
+	DLL_EXPORT void Noise(matrix* src, matrix* dst, int percent, int seed) {
 
 		XS_SRAND(seed);
 		
@@ -22,7 +22,7 @@ namespace mop {
 						else {
 							r -= (int)(XSR_RAND(0x00, 0xFF) * p);
 						}
-						*src->access(x, y, c) = RANGE(0x00, 0xFF, r);
+						*dst->access(x, y, c) = RANGE(0x00, 0xFF, r);
 
 					}
 				}

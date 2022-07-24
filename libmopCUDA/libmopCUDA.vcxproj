@@ -18,6 +18,9 @@
     <ClInclude Include="include\effect.cuh" />
     <ClInclude Include="include\libmop_cuda.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\libmop_cuda.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{44D7D846-BF8A-440A-B9FB-2B578FBA987E}</ProjectGuid>
     <RootNamespace>libmopCUDA</RootNamespace>
