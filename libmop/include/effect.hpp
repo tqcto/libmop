@@ -12,6 +12,10 @@ namespace mop {
 	*/
 	DLL_EXPORT void Noise(matrix* src, matrix* dst, int percent, int seed = 0);
 
+	DLL_EXPORT void Blur(matrix* src, matrix* dst, int amount);
+
+	DLL_EXPORT void RadialBlur(matrix* src, matrix* dst, int amount);
+
 	/**
 	* @fn
 	* @brief rgbデータをhsvデータに変換します。

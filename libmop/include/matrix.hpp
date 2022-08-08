@@ -11,7 +11,7 @@ namespace mop {
 		//BITMAPDATA_t	bmp;
 		//uchar*			_data = nullptr;
 
-		//  ‰¡•
+		// ‰¡•
 		uint _w = 0;
 		// c•
 		uint _h = 0;

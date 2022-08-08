@@ -92,17 +92,7 @@ int main(void) {
     printf("src data ptr : %p\n", src.data);
     printf("dst data ptr : %p\n", dst.data);
 
-    Average<3>(&src, &dst, fvc);
-    //Filter<int, 3>(&src, &dst, f, vcf);
-    start = clock();
-    mop::Noise(&src, &dst, 100);
-    cpu_duration = (double)(clock() - start) / CLOCKS_PER_SEC;
-
-    start = clock();
-    mop_cuda::Blur(&src, &dst, 30);
-    gpu_duration = (double)(clock() - start) / CLOCKS_PER_SEC;
-    std::cout << "cpu duration　= " << cpu_duration << "sec.\n";
-    std::cout << "gpu duration　= " << gpu_duration << "sec.\n";
+    RadialBlur(&src, &dst, 40);
 
     dst.encode(ENCODE_F);
 

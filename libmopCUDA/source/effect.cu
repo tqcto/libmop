@@ -69,52 +69,96 @@ namespace mop_cuda {
 			h = src->height(),
 			c = src->channel();
 
-		int m = 0, n = 0;
-		if ((amount * 5) % 10 != 0) {
-			m = amount / 2;
-			n = m;
+		if (w && h && c && amount) {
+
+			int m = 0, n = 0;
+			if ((amount * 5) % 10 != 0) {
+				m = amount / 2;
+				n = m;
+			}
+			else {
+				m = (double)amount / 2.0;
+				n = m - 1;
+			}
+
+			uchar* input, * output;
+			int size = sizeof(uchar) * w * h * c;
+
+			cudaMalloc((void**)&input, size);
+			cudaMalloc((void**)&output, size);
+
+			cudaMemcpy(input, src->data, size, cudaMemcpyHostToDevice);
+
+			*dst = matrix(w, h, c);
+
+			///*
+			const dim3 block(w / 125, h / 125);
+			const dim3 grid(divUp(w, block.x), divUp(h, block.y));
+			//*/
+			/*
+			int nw = w * 2048;
+			int nh = h * 2048;
+			const dim3 block(w, h);
+			const dim3 grid(nw / block.x, nh / block.y);
+			*/
+			/*
+			const dim3 block(1, 1);
+			const dim3 grid(w, h);
+			*/
+
+			BlurDevice << <grid, block >> > (input, output, w, h, c, m, n);
+
+			cudaMemcpy(
+				dst->data,
+				output,
+				size,
+				cudaMemcpyDeviceToHost
+			);
+
+			cudaFree(input);
+			cudaFree(output);
+
 		}
-		else {
-			m = (double)amount / 2.0;
-			n = m - 1;
+
+	}
+	DLL_EXPORT void Blur(uchar** src, uchar** dst, int w, int h, int c, int amount) {
+
+		if (w && h && c && amount) {
+
+			int m = 0, n = 0;
+			if ((amount * 5) % 10 != 0) {
+				m = amount / 2;
+				n = m;
+			}
+			else {
+				m = (double)amount / 2.0;
+				n = m - 1;
+			}
+
+			uchar* input, * output;
+			int size = sizeof(uchar) * w * h * c;
+
+			cudaMalloc((void**)&input, size);
+			cudaMalloc((void**)&output, size);
+
+			cudaMemcpy(input, *src, size, cudaMemcpyHostToDevice);
+
+			const dim3 block(w / 125, h / 125);
+			const dim3 grid(divUp(w, block.x), divUp(h, block.y));
+
+			BlurDevice << <grid, block >> > (input, output, w, h, c, m, n);
+
+			cudaMemcpy(
+				*dst,
+				output,
+				size,
+				cudaMemcpyDeviceToHost
+			);
+
+			cudaFree(input);
+			cudaFree(output);
+
 		}
-
-		uchar* input, * output;
-		int size = sizeof(uchar) * w * h * c;
-
-		cudaMalloc((void**)&input, size);
-		cudaMalloc((void**)&output, size);
-
-		cudaMemcpy(input, src->data, size, cudaMemcpyHostToDevice);
-
-		*dst = matrix(w, h, c);
-
-		///*
-		const dim3 block(w / 125, h / 125);
-		const dim3 grid(divUp(w, block.x), divUp(h, block.y));
-		//*/
-		/*
-		int nw = w * 2048;
-		int nh = h * 2048;
-		const dim3 block(w, h);
-		const dim3 grid(nw / block.x, nh / block.y);
-		*/
-		/*
-		const dim3 block(1, 1);
-		const dim3 grid(w, h);
-		*/
-
-		BlurDevice << <grid, block >> > (input, output, w, h, c, m, n);
-
-		cudaMemcpy(
-			dst->data,
-			output,
-			size,
-			cudaMemcpyDeviceToHost
-		);
-
-		cudaFree(input);
-		cudaFree(output);
 
 	}
 

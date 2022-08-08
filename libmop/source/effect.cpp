@@ -1,6 +1,7 @@
 #include "..\include\effect.hpp"
 
 #include <stdio.h>
+#include <math.h>
 
 namespace mop {
 
@@ -26,6 +27,96 @@ namespace mop {
 
 					}
 				}
+			}
+		}
+
+	}
+
+	DLL_EXPORT void Blur(matrix* src, matrix* dst, int amount) {
+
+		int w = src->width(),
+			h = src->height(),
+			c = src->channel();
+
+		int m = 0, n = 0;
+		if ((amount * 5) % 10 != 0) {
+			m = amount / 2;
+			n = m;
+		}
+		else {
+			m = (double)amount / 2.0;
+			n = m - 1;
+		}
+
+		for (int y = 0; y < h; y++) {
+			for (int x = 0; x < w; x++) {
+				for (int cc = 0; cc < c; cc++) {
+
+					int data = 0,
+						num = 1;
+
+					for (int yy = y - m; yy < y + n; yy++) {
+						for (int xx = x - m; xx < x + n; xx++) {
+
+							if (0 <= xx && xx < w && 0 <= yy && yy < h) {
+								data += (int)(*src->access(xx, yy, cc));
+								num++;
+							}
+
+						}
+					}
+
+					*dst->access(x, y, cc) = data / num;
+					//dst->data[(x + y * w) * c + cc] = data / num;
+
+				}
+			}
+		}
+
+	}
+
+	DLL_EXPORT void RadialBlur(matrix* src, matrix* dst, int amount) {
+
+		int x = 0,
+			y = 0,
+			a = 0;
+
+		int w = src->width();
+		int h = src->height();
+		int ch = src->channel();
+
+		double hw = (double)w / 2.0;
+		double hh = (double)h / 2.0;
+
+		double angle = 0;
+
+		for (y = 0; y < h; y++) {
+			for (x = 0; x < w; x++) {
+
+				angle = atan2(y - hh, x - hw);
+				double xx = (double)x + R2D(cos(angle)) - hw;
+				double yy = (double)y + R2D(sin(angle)) - hh;
+
+				for (int c = 0; c < ch; c++) {
+					int data = 0;
+					int num = 0;
+
+					for (a = 0; a < amount; a++) {
+
+						int _x = static_cast<int>(xx * (double)a + 0.5);
+						int _y = static_cast<int>(yy * (double)a + 0.5);
+
+						if (0 <= _x && _x < w && 0 <= _y && _y < h) {
+							data += (int)*src->access(_x, _y, c);
+							num++;
+						}
+
+					}
+
+					//dst->data[(x + y * w) * ch + c] = data / amount;
+					*dst->access(x, y, c) = data / num;
+				}
+
 			}
 		}
 
