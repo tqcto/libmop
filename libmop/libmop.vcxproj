@@ -55,6 +55,9 @@
     <ClCompile Include="source\wrap.c" />
     <ClCompile Include="source\xor_shift.c" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="source\effect.cl" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

@@ -75,4 +75,9 @@
       <Filter>Source\deflate</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="source\effect.cl">
+      <Filter>Source</Filter>
+    </None>
+  </ItemGroup>
 </Project>
