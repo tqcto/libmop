@@ -84,15 +84,22 @@ int main(void) {
     double start, cpu_duration, gpu_duration;
 
     matrix src(BMP_FILE);
-    matrix dst;// = src;
-    //matrix dst(&src);
+    matrix dst(src.width(), src.height(), 1);
 
-    dst = src;
+    for (int y = 0; y < src.height(); y++) {
+        int yw = y * src.width();
+        for (int x = 0; x < src.width(); x++) {
+            
+            int sum = 0;
 
-    printf("src data ptr : %p\n", src.data);
-    printf("dst data ptr : %p\n", dst.data);
+            for (int c = 0; c < src.channel(); c++) {
+                sum += src.data[(x + yw) * src.channel() + c];
+            }
 
-    RadialBlur(&src, &dst, 40);
+            dst.data[x + yw] = sum >= 0xFF * src.channel() >> 2 ? 0xFF : 0x00;
+
+        }
+    }
 
     dst.encode(ENCODE_F);
 

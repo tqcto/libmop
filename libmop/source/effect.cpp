@@ -99,7 +99,7 @@ namespace mop {
 
 				for (int c = 0; c < ch; c++) {
 					int data = 0;
-					int num = 0;
+					int num = 1;
 
 					for (a = 0; a < amount; a++) {
 

@@ -90,7 +90,7 @@ DLL_EXPORT int encodeJPG(BITMAPDATA_t* bmp, const char* filename, int quality) {
 	jpeg.image_width		= w;
 	jpeg.image_height		= h;
 	jpeg.input_components	= c;
-	jpeg.in_color_space = JCS_RGB;
+	jpeg.in_color_space = c == 3 ? JCS_RGB : c == 1 ? JCS_GRAYSCALE : JCS_UNKNOWN;
 	jpeg_set_defaults(&jpeg);
 
 	jpeg_set_quality(&jpeg, quality, TRUE);
