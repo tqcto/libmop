@@ -1,4 +1,4 @@
-#include "..\include\reader.hpp"
+#include "reader.hpp"
 
 #include <stdio.h>
 #include <stdlib.h>

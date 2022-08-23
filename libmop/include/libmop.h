@@ -9,7 +9,11 @@ extern "C" {
 #include "winutil.h"
 
 extern "C++" {
+
 #include "deflate/deflate.hpp"
+
+#include "gpu/device.hpp"
+
 #include "reader.hpp"
 #include "matrix.hpp"
 #include "effect.hpp"

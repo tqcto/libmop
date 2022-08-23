@@ -51,3 +51,10 @@
 #ifndef ARRAY_SIZE
 #define ARRAY_SIZE(_A) ( sizeof(_A) / sizeof(_A[0]) )
 #endif
+
+#ifndef CL_CHECK_ERR
+#define CL_CHECK_ERR(func)			\
+	if (cl_int err = (func)) {		\
+		printf("error:%d\n", err);	\
+	}
+#endif

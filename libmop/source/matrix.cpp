@@ -1,6 +1,6 @@
-#include "..\include\matrix.hpp"
+#include "matrix.hpp"
 
-#include "..\include\libmop.h"
+#include "libmop.h"
 
 #include <stdio.h>
 #include <stdlib.h>

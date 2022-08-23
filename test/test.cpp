@@ -16,101 +16,25 @@
 #define ENCODE_F "F:\\SS\\encode171.jpg"
 
 using namespace mop;
+using namespace mop::device;
+
 using namespace mop_cuda;
-
-template <int M>
-void Average(matrix* src, matrix* dst, FilterValue func) {
-
-    int m = 0, n = 0;
-    if ((M * 5) % 10 != 0) {
-        m = M / 2;
-        n = m;
-    }
-    else {
-        m = (double)M / 2.0;
-        n = m - 1;
-    }
-
-    for (int y = 0; y < src->height(); y++) {
-        for (int x = 0; x < src->width(); x++) {
-
-            int r = 0, g = 0, b = 0;
-
-            for (int yy = y - m; yy <= y + n; yy++) {
-                for (int xx = x - m; xx <= x + n; xx++) {
-                    if (0 <= xx && xx < src->width() && 0 <= yy && yy < src->height()) {
-
-                        rgb c = { *src->access(xx, yy, 0), *src->access(xx, yy, 1), *src->access(xx, yy, 2) };
-                        rgb f = func(c);
-
-                        r += f.r;
-                        g += f.g;
-                        b += f.b;
-
-                    }
-                }
-            }
-
-            r /= m * n;
-            g /= m * n;
-            b /= m * n;
-
-            *dst->access(x, y, 0) = r;
-            *dst->access(x, y, 1) = g;
-            *dst->access(x, y, 2) = b;
-
-        }
-    }
-
-}
-
-int f[3][3] = {
-    { -1, 0, 1 },
-    { -1, 0, 1 },
-    { -1, 0, 1 }
-};
-
-rgb fvc(rgb c) {
-    return c;
-}
-rgb vcf(rgb c) {
-    return { rgb2hsv(c).v, rgb2hsv(c).v, rgb2hsv(c).v };
-}
 
 int main(void) {
 
-    #ifndef TEST_CUDA
-
-    double start, cpu_duration, gpu_duration;
+    platformProperties* props;
+    int num = 0;
+    GetPlatform(&props, &num);
 
     matrix src(BMP_FILE);
     matrix dst(src.width(), src.height(), 1);
 
-    for (int y = 0; y < src.height(); y++) {
-        int yw = y * src.width();
-        for (int x = 0; x < src.width(); x++) {
-            
-            int sum = 0;
-
-            for (int c = 0; c < src.channel(); c++) {
-                sum += src.data[(x + yw) * src.channel() + c];
-            }
-
-            dst.data[x + yw] = sum >= 0xFF * src.channel() >> 2 ? 0xFF : 0x00;
-
-        }
-    }
+    dst = src;
 
     dst.encode(ENCODE_F);
 
     src.Free();
     dst.Free();
-
-    #else
-
-    Test();
-
-    #endif
 
     return 0;
 

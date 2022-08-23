@@ -1,4 +1,4 @@
-#include "..\include\xor_shift.h"
+#include "xor_shift.h"
 
 static unsigned int seed128[4];
 

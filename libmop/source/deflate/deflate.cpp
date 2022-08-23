@@ -1,4 +1,4 @@
-#include "../../include/deflate/deflate.hpp"
+#include "deflate/deflate.hpp"
 
 #include <stdio.h>
 #include <stdlib.h>

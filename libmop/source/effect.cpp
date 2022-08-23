@@ -1,4 +1,4 @@
-#include "..\include\effect.hpp"
+#include "effect.hpp"
 
 #include <stdio.h>
 #include <math.h>

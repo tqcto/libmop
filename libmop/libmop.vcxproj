@@ -39,6 +39,7 @@
     <ClInclude Include="include\deflate\deflate.hpp" />
     <ClInclude Include="include\effect.hpp" />
     <ClInclude Include="include\filter.hpp" />
+    <ClInclude Include="include\gpu\device.hpp" />
     <ClInclude Include="include\libmop.h" />
     <ClInclude Include="include\matrix.hpp" />
     <ClInclude Include="include\reader.hpp" />
@@ -49,6 +50,7 @@
   <ItemGroup>
     <ClCompile Include="source\deflate\deflate.cpp" />
     <ClCompile Include="source\effect.cpp" />
+    <ClCompile Include="source\gpu\device.cpp" />
     <ClCompile Include="source\matrix.cpp" />
     <ClCompile Include="source\reader.cpp" />
     <ClCompile Include="source\winutil.cpp" />
@@ -165,29 +167,29 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\build\Debug</OutDir>
-    <IntDir>.\objects\Debug</IntDir>
+    <OutDir>$(SolutionDir)..\build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)libmop\objects\$(Configuration)</IntDir>
     <IncludePath>F:\Visual Studio Librarys\jpeg;$(CUDA_PATH)\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(CUDA_PATH)\lib\$(Platform);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='static_debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\build\static_debug</OutDir>
-    <IntDir>.\objects\static_debug</IntDir>
+    <OutDir>$(SolutionDir)..\build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)libmop\objects\$(Configuration)</IntDir>
     <IncludePath>F:\Visual Studio Librarys\jpeg;$(CUDA_PATH)\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(CUDA_PATH)\lib\$(Platform);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\..\build\Release</OutDir>
-    <IntDir>.\objects\Release</IntDir>
+    <OutDir>$(SolutionDir)..\build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)libmop\objects\$(Configuration)</IntDir>
     <IncludePath>F:\Visual Studio Librarys\jpeg;$(CUDA_PATH)\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(CUDA_PATH)\lib\$(Platform);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='static_release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\..\build\static_release</OutDir>
-    <IntDir>.\objects\static_release</IntDir>
+    <OutDir>$(SolutionDir)..\build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)libmop\objects\$(Configuration)</IntDir>
     <IncludePath>F:\Visual Studio Librarys\jpeg;$(CUDA_PATH)\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(CUDA_PATH)\lib\$(Platform);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
@@ -288,6 +290,7 @@
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp14</LanguageStandard>
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\libmop\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -297,11 +300,12 @@
       <AdditionalDependencies>jpeg.lib;OpenCL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(TargetDir)libmop.lib" "$(SolutionDir)..\release\dynamic\lib\libmopd.lib"
-copy "$(TargetDir)libmop.dll" "$(SolutionDir)..\release\dynamic\bin\libmopd.dll"
-rmdir /s /q "$(SolutionDir)..\release\dynamic\include\"
-xcopy "$(ProjectDir)include\" "$(SolutionDir)..\release\dynamic\include\"
-xcopy "$(ProjectDir)include\deflate\" "$(SolutionDir)..\release\dynamic\include\deflate\"</Command>
+      <Command>if exist "$(SolutionDir)..\release\bin\$(Configuration)" copy "$(OutDirFullPath)$(AssemblyName).dll" "$(SolutionDir)..\release\bin\$(Configuration)\$(AssemblyName).dll"
+copy "$(OutDirFullPath)$(AssemblyName).lib" "$(SolutionDir)..\release\lib\$(Configuration)\$(AssemblyName).lib"
+rmdir /s /q "$(SolutionDir)..\release\include\"
+xcopy "$(ProjectDir)include\" "$(SolutionDir)..\release\include\"
+xcopy "$(ProjectDir)include\deflate\" "$(SolutionDir)..\release\include\deflate\"
+xcopy "$(ProjectDir)include\gpu\" "$(SolutionDir)..\release\include\gpu\"</Command>
     </PostBuildEvent>
     <CudaCompile>
       <CompileOut>.\objects\Debug\%(Filename)%(Extension).obj</CompileOut>
@@ -321,6 +325,7 @@ xcopy "$(ProjectDir)include\deflate\" "$(SolutionDir)..\release\dynamic\include\
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp14</LanguageStandard>
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\libmop\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -330,10 +335,12 @@ xcopy "$(ProjectDir)include\deflate\" "$(SolutionDir)..\release\dynamic\include\
       <AdditionalDependencies>cudart_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(TargetDir)libmop.lib" "$(SolutionDir)..\release\static\lib\libmopd.lib"
-rmdir /s /q "$(SolutionDir)..\release\static\include\"
-xcopy "$(ProjectDir)include\" "$(SolutionDir)..\release\static\include\"
-xcopy "$(ProjectDir)include\deflate\" "$(SolutionDir)..\release\static\include\deflate\"</Command>
+      <Command>if exist "$(SolutionDir)..\release\bin\$(Configuration)" copy "$(OutDirFullPath)$(AssemblyName).dll" "$(SolutionDir)..\release\bin\$(Configuration)\$(AssemblyName).dll"
+copy "$(OutDirFullPath)$(AssemblyName).lib" "$(SolutionDir)..\release\lib\$(Configuration)\$(AssemblyName).lib"
+rmdir /s /q "$(SolutionDir)..\release\include\"
+xcopy "$(ProjectDir)include\" "$(SolutionDir)..\release\include\"
+xcopy "$(ProjectDir)include\deflate\" "$(SolutionDir)..\release\include\deflate\"
+xcopy "$(ProjectDir)include\gpu\" "$(SolutionDir)..\release\include\gpu\"</Command>
     </PostBuildEvent>
     <CudaCompile>
       <CompileOut>.\objects\Debug\%(Filename)%(Extension).obj</CompileOut>
@@ -359,6 +366,7 @@ xcopy "$(ProjectDir)include\deflate\" "$(SolutionDir)..\release\static\include\d
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp14</LanguageStandard>
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\libmop\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -370,11 +378,12 @@ xcopy "$(ProjectDir)include\deflate\" "$(SolutionDir)..\release\static\include\d
       <AdditionalDependencies>jpeg.lib;OpenCL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(TargetDir)libmop.lib" "$(SolutionDir)..\release\dynamic\lib\libmop.lib"
-copy "$(TargetDir)libmop.dll" "$(SolutionDir)..\release\dynamic\bin\libmop.dll"
-rmdir /s /q "$(SolutionDir)..\release\dynamic\include\"
-xcopy "$(ProjectDir)include\" "$(SolutionDir)..\release\dynamic\include\"
-xcopy "$(ProjectDir)include\deflate\" "$(SolutionDir)..\release\dynamic\include\deflate\"</Command>
+      <Command>if exist "$(SolutionDir)..\release\bin\$(Configuration)" copy "$(OutDirFullPath)$(AssemblyName).dll" "$(SolutionDir)..\release\bin\$(Configuration)\$(AssemblyName).dll"
+copy "$(OutDirFullPath)$(AssemblyName).lib" "$(SolutionDir)..\release\lib\$(Configuration)\$(AssemblyName).lib"
+rmdir /s /q "$(SolutionDir)..\release\include\"
+xcopy "$(ProjectDir)include\" "$(SolutionDir)..\release\include\"
+xcopy "$(ProjectDir)include\deflate\" "$(SolutionDir)..\release\include\deflate\"
+xcopy "$(ProjectDir)include\gpu\" "$(SolutionDir)..\release\include\gpu\"</Command>
     </PostBuildEvent>
     <CudaCompile>
       <CompileOut>.\objects\Release\%(Filename)%(Extension).obj</CompileOut>
@@ -396,6 +405,7 @@ xcopy "$(ProjectDir)include\deflate\" "$(SolutionDir)..\release\dynamic\include\
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp14</LanguageStandard>
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\libmop\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -407,10 +417,12 @@ xcopy "$(ProjectDir)include\deflate\" "$(SolutionDir)..\release\dynamic\include\
       <AdditionalDependencies>cudart_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(TargetDir)libmop.lib" "$(SolutionDir)..\release\static\lib\libmop.lib"
-rmdir /s /q "$(SolutionDir)..\release\static\include\"
-xcopy "$(ProjectDir)include\" "$(SolutionDir)..\release\static\include\"
-xcopy "$(ProjectDir)include\deflate\" "$(SolutionDir)..\release\static\include\deflate\"</Command>
+      <Command>if exist "$(SolutionDir)..\release\bin\$(Configuration)" copy "$(OutDirFullPath)$(AssemblyName).dll" "$(SolutionDir)..\release\bin\$(Configuration)\$(AssemblyName).dll"
+copy "$(OutDirFullPath)$(AssemblyName).lib" "$(SolutionDir)..\release\lib\$(Configuration)\$(AssemblyName).lib"
+rmdir /s /q "$(SolutionDir)..\release\include\"
+xcopy "$(ProjectDir)include\" "$(SolutionDir)..\release\include\"
+xcopy "$(ProjectDir)include\deflate\" "$(SolutionDir)..\release\include\deflate\"
+xcopy "$(ProjectDir)include\gpu\" "$(SolutionDir)..\release\include\gpu\"</Command>
     </PostBuildEvent>
     <CudaCompile>
       <CompileOut>.\objects\Release\%(Filename)%(Extension).obj</CompileOut>

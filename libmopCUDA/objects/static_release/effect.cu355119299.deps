@@ -237,13 +237,13 @@ D:\Windows Kits\10\Include\10.0.22000.0\um\winver.h
 D:\Windows Kits\10\Include\10.0.22000.0\um\wow64apiset.h
 F:\Visual Studio Librarys\Originals\libmop\libmop\libmopCUDA\include\effect.cuh
 F:\Visual Studio Librarys\Originals\libmop\libmop\libmopCUDA\include\libmop_cuda.h
-F:\Visual Studio Librarys\Originals\libmop\release\static\include\deflate\define.h
-F:\Visual Studio Librarys\Originals\libmop\release\static\include\deflate\deflate.hpp
-F:\Visual Studio Librarys\Originals\libmop\release\static\include\effect.hpp
-F:\Visual Studio Librarys\Originals\libmop\release\static\include\filter.hpp
-F:\Visual Studio Librarys\Originals\libmop\release\static\include\libmop.h
-F:\Visual Studio Librarys\Originals\libmop\release\static\include\matrix.hpp
-F:\Visual Studio Librarys\Originals\libmop\release\static\include\reader.hpp
-F:\Visual Studio Librarys\Originals\libmop\release\static\include\winutil.h
-F:\Visual Studio Librarys\Originals\libmop\release\static\include\wrap.h
-F:\Visual Studio Librarys\Originals\libmop\release\static\include\xor_shift.h
+F:\Visual Studio Librarys\Originals\libmop\release\include\deflate\define.h
+F:\Visual Studio Librarys\Originals\libmop\release\include\deflate\deflate.hpp
+F:\Visual Studio Librarys\Originals\libmop\release\include\effect.hpp
+F:\Visual Studio Librarys\Originals\libmop\release\include\filter.hpp
+F:\Visual Studio Librarys\Originals\libmop\release\include\libmop.h
+F:\Visual Studio Librarys\Originals\libmop\release\include\matrix.hpp
+F:\Visual Studio Librarys\Originals\libmop\release\include\reader.hpp
+F:\Visual Studio Librarys\Originals\libmop\release\include\winutil.h
+F:\Visual Studio Librarys\Originals\libmop\release\include\wrap.h
+F:\Visual Studio Librarys\Originals\libmop\release\include\xor_shift.h

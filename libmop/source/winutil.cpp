@@ -1,4 +1,4 @@
-#include "../include/winutil.h"
+#include "winutil.h"
 
 DLL_EXPORT HWND make_new_window(WNDPROC proc) {
 

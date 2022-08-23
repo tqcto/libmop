@@ -19,6 +19,12 @@
     <Filter Include="Source\deflate">
       <UniqueIdentifier>{ecda42f8-92da-4df5-ab3e-3e5275e6db79}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header\gpu">
+      <UniqueIdentifier>{981ece84-9d74-4e06-a895-65dda88a23ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\gpu">
+      <UniqueIdentifier>{40a0b3eb-d17a-4d3d-9e0a-06ab839dbdae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\libmop.h">
@@ -51,6 +57,9 @@
     <ClInclude Include="include\filter.hpp">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="include\gpu\device.hpp">
+      <Filter>Header\gpu</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\wrap.c">
@@ -73,6 +82,9 @@
     </ClCompile>
     <ClCompile Include="source\deflate\deflate.cpp">
       <Filter>Source\deflate</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gpu\device.cpp">
+      <Filter>Source\gpu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,4 @@
-#include "../include/wrap.h"
+#include "wrap.h"
 
 DLL_EXPORT inline int tile(int value, int max) {
 

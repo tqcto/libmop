@@ -262,4 +262,30 @@ namespace mop {
 
 #pragma endregion
 
+	#pragma region device define
+
+	typedef struct {
+
+		char device_name[256];
+		bool is_gpu;				// GPU -> true, CPU or accelerator or ... -> false
+		void* device_id;			// cl_device_id struct
+		void* device_context;		// cl_context struct
+		void* device_command_queue;	// cl_command_queue struct
+
+	}deviceProperties;
+
+	typedef struct {
+
+		char platform_name[256];
+		char platform_vendor[256];
+		char platform_vertion[256];
+		void* platform_id;			// cl_platform_id struct
+
+		deviceProperties devices[8];
+		int number_of_device;
+
+	}platformProperties;
+
+	#pragma endregion
+
 }
