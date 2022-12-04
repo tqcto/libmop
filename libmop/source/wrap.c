@@ -17,13 +17,10 @@ DLL_EXPORT inline int tile(int value, int max) {
 
 DLL_EXPORT inline int mirror(int value, int max) {
 
-	value *= (0 > value ? -1 : 1);
+	int max_1 = max - 1;
+	int a = abs(value) / max_1;
+	int p = a % 2;
 
-	if (max <= value) {
-		value -= max;
-		value = max - mirror(value, max);
-	}
-
-	return value;
+	return p ? max_1 - abs(value) % max_1 : abs(value) % max_1;
 
 }

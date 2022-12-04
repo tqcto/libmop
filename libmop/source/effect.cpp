@@ -1,7 +1,10 @@
 #include "effect.hpp"
 
 #include <stdio.h>
+#include <string.h>
 #include <math.h>
+
+#include <CL/cl.h>
 
 namespace mop {
 
@@ -34,44 +37,65 @@ namespace mop {
 
 	DLL_EXPORT void Blur(matrix* src, matrix* dst, int amount) {
 
-		int w = src->width(),
-			h = src->height(),
-			c = src->channel();
+		platformProperties* pp;
+		int pp_num;
+		device::GetPlatform(&pp, &pp_num);
 
-		int m = 0, n = 0;
-		if ((amount * 5) % 10 != 0) {
-			m = amount / 2;
-			n = m;
-		}
-		else {
-			m = (double)amount / 2.0;
-			n = m - 1;
+		/*
+		FILE* fp;
+		fp = fopen("effect.cl", "r");
+		if (fp == NULL) {
+			printf("%s load failed\n", "effect.cl");
+			return;
 		}
 
-		for (int y = 0; y < h; y++) {
-			for (int x = 0; x < w; x++) {
-				for (int cc = 0; cc < c; cc++) {
+		fseek(fp, 0, SEEK_END);
+		const int filesize = ftell(fp);
 
-					int data = 0,
-						num = 1;
+		fseek(fp, 0, 0);
+		char* source_code = (char*)malloc(filesize);
+		size_t sourceSize = fread(source_code, sizeof(char), filesize, fp);
+		fclose(fp);
+		free(source_code);
+		*/
+		///*
+		#define OCL_EXTERNAL_INCLUDE(x) #x
+		const char sourcecode[] =
+		#include "effect.cl"
+		;
+		//*/
+		size_t sourceSize = 842;
+		//printf("sourceSize:%d\n", sourceSize);
+		cl_program program = (cl_program)(device::CompileCLProgram(
+			(char*)sourcecode,
+			sourceSize,
+			&(pp[0].devices[0])
+		));
 
-					for (int yy = y - m; yy < y + n; yy++) {
-						for (int xx = x - m; xx < x + n; xx++) {
+		cl_int er;
+		cl_kernel kernel = clCreateKernel(program, "Blur", &er);
+		printf("kernel : %x, err : %d\n", kernel, er);
 
-							if (0 <= xx && xx < w && 0 <= yy && yy < h) {
-								data += (int)(*src->access(xx, yy, cc));
-								num++;
-							}
+		int mem_size = sizeof(unsigned char) * src->width() * src->height() * src->channel();
+		cl_mem cl_src = clCreateBuffer((cl_context)pp[0].devices[0].device_context, CL_MEM_READ_WRITE, mem_size, NULL, NULL);
+		cl_mem cl_dst = clCreateBuffer((cl_context)pp[0].devices[0].device_context, CL_MEM_READ_WRITE, mem_size, NULL, NULL);
 
-						}
-					}
+		clEnqueueWriteBuffer((cl_command_queue)pp[0].devices[0].device_command_queue, cl_src, CL_TRUE, 0, mem_size, src->data, 0, NULL, NULL);
 
-					*dst->access(x, y, cc) = data / num;
-					//dst->data[(x + y * w) * c + cc] = data / num;
+		cl_int3 size = { src->width(), src->height(), src->channel() };
+		int half_amount = static_cast<int>((float)amount / 2.0F + 0.5F);
+		clSetKernelArg(kernel, 0, sizeof(cl_mem), &cl_src);
+		clSetKernelArg(kernel, 1, sizeof(cl_mem), &cl_dst);
+		clSetKernelArg(kernel, 2, sizeof(cl_int3), &size);
+		clSetKernelArg(kernel, 3, sizeof(cl_int), &half_amount);
 
-				}
-			}
-		}
+		size_t workSize[2] = { src->width(), src->height() };
+		CL_CHECK_ERR(clEnqueueNDRangeKernel((cl_command_queue)pp[0].devices[0].device_command_queue, kernel, 2, NULL, workSize, NULL, 0, NULL, NULL));
+
+		clEnqueueReadBuffer((cl_command_queue)pp[0].devices[0].device_command_queue, cl_dst, CL_TRUE, 0, mem_size, dst->data, 0, NULL, NULL);
+
+		clReleaseMemObject(cl_src);
+		clReleaseMemObject(cl_dst);
 
 	}
 

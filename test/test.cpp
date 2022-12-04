@@ -22,14 +22,10 @@ using namespace mop_cuda;
 
 int main(void) {
 
-    platformProperties* props;
-    int num = 0;
-    GetPlatform(&props, &num);
-
     matrix src(BMP_FILE);
-    matrix dst(src.width(), src.height(), 1);
+    matrix dst(src.width(), src.height(), src.channel());
 
-    dst = src;
+    mop::Blur(&src, &dst, 20);
 
     dst.encode(ENCODE_F);
 

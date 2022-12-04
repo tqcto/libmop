@@ -139,29 +139,29 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\..\build\Debug</OutDir>
     <IntDir>.\objects\Debug</IntDir>
-    <IncludePath>$(SolutionDir)\libmopCUDA\include;$(SolutionDir)\libmop\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)..\build\$(Configuration);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(CUDA_PATH)\include;$(SolutionDir)\libmopCUDA\include;$(SolutionDir)\libmop\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(CUDA_PATH)\lib\$(Platform);$(SolutionDir)..\build\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='static_debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\..\build\Debug</OutDir>
     <IntDir>.\objects\Debug</IntDir>
-    <IncludePath>$(SolutionDir)\libmopCUDA\include;$(SolutionDir)\libmop\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)..\build\$(Configuration);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(CUDA_PATH)\include;$(SolutionDir)\libmopCUDA\include;$(SolutionDir)\libmop\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(CUDA_PATH)\lib\$(Platform);$(SolutionDir)..\build\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\..\build\Release</OutDir>
     <IntDir>.\objects\Release</IntDir>
-    <IncludePath>$(SolutionDir)\libmopCUDA\include;$(SolutionDir)\libmop\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)..\build\$(Configuration);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(CUDA_PATH)\include;$(SolutionDir)\libmopCUDA\include;$(SolutionDir)\libmop\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(CUDA_PATH)\lib\$(Platform);$(SolutionDir)..\build\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='static_release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\..\build\Release</OutDir>
     <IntDir>.\objects\Release</IntDir>
-    <IncludePath>$(SolutionDir)\libmopCUDA\include;$(SolutionDir)\libmop\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)..\build\$(Configuration);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(CUDA_PATH)\include;$(SolutionDir)\libmopCUDA\include;$(SolutionDir)\libmop\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(CUDA_PATH)\lib\$(Platform);$(SolutionDir)..\build\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -234,8 +234,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\build\$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libmop.lib;libmop_cuda.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(CUDA_PATH)\lib\$(Platform);$(SolutionDir)..\build\$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libmop.lib;libmop_cuda.lib;OpenCL.lib</AdditionalDependencies>
     </Link>
     <CudaCompile>
       <AdditionalDeps>cuda.cuh;%(AdditionalDeps)</AdditionalDeps>
@@ -259,8 +259,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\build\$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libmop.lib;libmop_cuda.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(CUDA_PATH)\lib\$(Platform);$(SolutionDir)..\build\$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libmop.lib;libmop_cuda.lib;OpenCL.lib</AdditionalDependencies>
     </Link>
     <CudaCompile>
       <AdditionalDeps>cuda.cuh;%(AdditionalDeps)</AdditionalDeps>
@@ -288,8 +288,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\build\$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libmop.lib;libmop_cuda.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(CUDA_PATH)\lib\$(Platform);$(SolutionDir)..\build\$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libmop.lib;libmop_cuda.lib;OpenCL.lib</AdditionalDependencies>
     </Link>
     <CudaCompile>
       <AdditionalDeps>cuda.cuh;%(AdditionalDeps)</AdditionalDeps>
@@ -318,8 +318,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\build\$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libmop.lib;libmop_cuda.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(CUDA_PATH)\lib\$(Platform);$(SolutionDir)..\build\$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libmop.lib;libmop_cuda.lib;OpenCL.lib</AdditionalDependencies>
     </Link>
     <CudaCompile>
       <AdditionalDeps>cuda.cuh;%(AdditionalDeps)</AdditionalDeps>

@@ -1,6 +1,7 @@
 #include "gpu/device.hpp"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <CL/cl.h>
 
 namespace mop {
@@ -68,7 +69,7 @@ namespace device {
             for (int j = 0; j < deviceNumber; j++)
             {
                 printf("    device idx : %d\n", j);
-                result[i]->devices[j].device_id = deviceIds[j];
+                result[i]->devices[j].device_id = (void*)(deviceIds[j]);
 
                 clGetDeviceInfo(
                     (cl_device_id)(result[i]->devices[j].device_id),
@@ -89,14 +90,14 @@ namespace device {
                 result[i]->devices[j].is_gpu = type == CL_DEVICE_TYPE_GPU ? true : false;
 
                 result[i]->devices[j].device_context =
-                    clCreateContext(
+                    (void*)clCreateContext(
                         NULL, 1,
                         (cl_device_id*)&(result[i]->devices[j].device_id),
                         NULL, NULL, NULL
                     );
 
                 result[i]->devices[j].device_command_queue =
-                    clCreateCommandQueue(
+                    (void*)clCreateCommandQueue(
                         (cl_context)(result[i]->devices[j].device_context),
                         (cl_device_id)(result[i]->devices[j].device_id),
                         0, NULL
@@ -105,6 +106,35 @@ namespace device {
             }
 
         }
+
+    }
+
+    DLL_EXPORT void* CompileCLProgram(char* source_code, int code_size, deviceProperties* device) {
+
+        cl_program result =
+            clCreateProgramWithSource(
+                (cl_context)(device->device_context),
+                1,
+                (const char**)&source_code,
+                (const size_t*)&code_size,
+                NULL
+            );
+
+        if (clBuildProgram(result, 1, (cl_device_id*)(&(device->device_id)), NULL, NULL, NULL)) {
+
+            size_t logSize;
+
+            clGetProgramBuildInfo(result, (cl_device_id)(device->device_id), CL_PROGRAM_BUILD_LOG, 0, NULL, &logSize);
+
+            char* buildLog = (char*)malloc((logSize + 1));
+            clGetProgramBuildInfo(result, (cl_device_id)(device->device_id), CL_PROGRAM_BUILD_LOG, logSize, buildLog, NULL);
+
+            printf("%s\n", buildLog);
+            free(buildLog);
+
+        }
+
+        return result;
 
     }
 

@@ -55,6 +55,38 @@ namespace mop {
 
 	};
 
+	/*
+	template <typename T>
+	struct _complex {
+
+		T r;
+		T i;
+
+		_complex(void) {
+			r = 0;
+			i = 0;
+		}
+		_complex(T real, T imag) {
+			r = real;
+			i = imag;
+		}
+
+		_complex& operator=(const _complex& src) {
+
+			if (this != &src) {
+
+				this->r = src.r;
+				this->i = src.i;
+
+			}
+
+			return *this;
+
+		}
+
+	};
+	*/
+
 	typedef _vector2<int> vector2;
 	typedef _vector2<float> vector2f;
 	typedef _vector2<double> vector2d;
@@ -62,6 +94,8 @@ namespace mop {
 	typedef _vector3<int> vector3;
 	typedef _vector3<float> vector3f;
 	typedef _vector3<double> vector3d;
+
+	//typedef _complex<int> complex;
 
 	#pragma endregion
 
@@ -267,10 +301,10 @@ namespace mop {
 	typedef struct {
 
 		char device_name[256];
-		bool is_gpu;				// GPU -> true, CPU or accelerator or ... -> false
-		void* device_id;			// cl_device_id struct
-		void* device_context;		// cl_context struct
-		void* device_command_queue;	// cl_command_queue struct
+		bool is_gpu;					// GPU -> true, CPU or accelerator or ... -> false
+		void* device_id;				// cl_device_id struct
+		void* device_context;			// cl_context struct
+		void* device_command_queue;		// cl_command_queue struct
 
 	}deviceProperties;
 
